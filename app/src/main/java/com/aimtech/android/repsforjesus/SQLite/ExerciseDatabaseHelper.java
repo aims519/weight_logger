@@ -1,8 +1,10 @@
 package com.aimtech.android.repsforjesus.SQLite;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by Andy on 31/07/2016.
@@ -12,6 +14,16 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
     // If you change the database schema, you must increment the database version
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "ExerciseDb.db";
+
+    // master list of default CHEST Exercises and categories
+    String[] masterListChest = new String[]{
+            "Bench Press",
+            "Bench Press (Incline)",
+            "Close Grip",
+            "Pectoral Fly",
+            "Peck Fly (Easy)",
+            "Converging Chest Press"
+    };
 
     // Default Constructor
     public ExerciseDatabaseHelper(Context context) {
@@ -30,6 +42,9 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED + " TEXT" +
                 " )";
         sqLiteDatabase.execSQL(SQL_CREATE_ENTRIES);
+
+        // Insert the defualt lines into the newly created database
+        insertDefaultLines(sqLiteDatabase);
     }
 
     @Override
@@ -38,5 +53,24 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
         final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + ExerciseDatabaseContract.ExerciseTable.TABLE_NAME;
         sqLiteDatabase.execSQL(SQL_DELETE_ENTRIES);
     }
+
+
+    // function to initialise all the default exercies with 0 current weights to start with
+    private void insertDefaultLines(SQLiteDatabase db){
+
+        // Insert default chest exercises
+        for(int i =0;i<masterListChest.length;i++){
+            ContentValues values = new ContentValues();
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME,masterListChest[i]);
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY,"chest");
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT,"0.0");
+
+            //Insert() returns the primary key value of the new row
+            long newRowId=db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,null,values);
+            Log.i("Database Updated", "New Row ID : " + newRowId);
+        }
+    }
+
+
 
 }

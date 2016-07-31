@@ -50,6 +50,9 @@ public class ChestFragment extends Fragment {
         mExerciseList.add(new Exercise("Bench Press (Incline)",40.0,null,null));
         mExerciseList.add(new Exercise("Pectoral Fly",54.0,null,null));
         mExerciseList.add(new Exercise("Chest Press",45.0,null,null));
+        
+        //TODO read the list of exercises from the database and put them into an arrayList
+        
 
         // Set up adapter
         adapter = new ExerciseListAdapter(getContext(),mExerciseList);
@@ -62,15 +65,22 @@ public class ChestFragment extends Fragment {
         mDbHelper = new ExerciseDatabaseHelper(getActivity());
 
 
+        // Reset the database
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        mDbHelper.onUpgrade(db,mDbHelper.DATABASE_VERSION,mDbHelper.DATABASE_VERSION);
+        mDbHelper.onCreate(db);
+
+
+
         // Insert/Query the database
         //insertDbTest();
-        queryDbTest();
+        queryDbChest();
 
 
         return rootView;
     }
 
-    public void queryDbTest(){
+    public void queryDbChest(){
         // Get readable database
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
