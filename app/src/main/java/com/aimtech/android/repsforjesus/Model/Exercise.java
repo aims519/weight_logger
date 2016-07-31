@@ -65,4 +65,15 @@ public class Exercise {
     public void setName(String mName) {
         this.mName = mName;
     }
+
+
+    @Override
+    public String toString() {
+        return "Exercise{" +
+                "mCurrentWeight=" + mCurrentWeight +
+                ", mPreviousWeight=" + mPreviousWeight +
+                ", mDateLastUpdated=" + mDateLastUpdated +
+                ", mName='" + mName + '\'' +
+                '}';
+    }
 }

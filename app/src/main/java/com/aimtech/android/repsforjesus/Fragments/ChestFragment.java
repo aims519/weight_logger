@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.aimtech.android.repsforjesus.Adapters.ExerciseListAdapter;
 import com.aimtech.android.repsforjesus.Dialogs.EditWeightDialog;
@@ -25,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +44,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout from XML file
@@ -63,6 +63,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
         //mDbHelper.onCreate(db);
 
         //Read the list of exercises from the database and put them into an arrayList
+        // Clears the array list first
         LoadChestList();
 
         // Set up adapter
@@ -94,18 +95,13 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
             }
         });
 
+
         return rootView;
     }
 
-    // Define what happens on save of a new weight
-
-
+    // Define what happens on save of a new weight. Method from dialog interface
     @Override
     public void onSaveNewWeight(String exerciseName,String newWeight) {
-        Toast.makeText(getContext(),"'" +exerciseName + "' new weight : " + newWeight,Toast.LENGTH_SHORT).show();
-
-        //TODO save new weight to the database
-
 
         // Get the current weight so that it can be transferred to previous weight
         String currentWeight = getCurrentWeightForExercise(exerciseName);
@@ -192,8 +188,25 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
 
             // Create an Exercise Object for each row returned in the query and add to arrayList
             while ( c != null) {
-                Log.i("Cursor Output", c.getString(idIndex) + ", " + c.getString(nameIndex) + ", " + c.getString(cateroryIndex) + ", " + c.getString(currentWeightIndex)+ ", " + c.getString(previousWeightIndex)+ ", " + c.getString(dateLastUpdatedIndex));
-                mExerciseList.add(new Exercise(c.getString(nameIndex),Double.parseDouble(c.getString(currentWeightIndex)),null,null));
+                Log.i("Load Chest List", "Cursor Output : " + c.getString(idIndex) + ", " + c.getString(nameIndex) + ", " + c.getString(cateroryIndex) + ", " + c.getString(currentWeightIndex)+ ", " + c.getString(previousWeightIndex)+ ", " + c.getString(dateLastUpdatedIndex));
+
+                // Deal with possible null values
+                Double previousWeight;
+                Date dateLastUpdated;
+                if(c.getString(previousWeightIndex) != null){
+                    previousWeight = Double.parseDouble(c.getString(previousWeightIndex));
+                } else {
+                    previousWeight = null;
+                }
+
+                if(c.getString(dateLastUpdatedIndex) != null){
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
+                    dateLastUpdated = dateFormat.parse(c.getString(dateLastUpdatedIndex));
+                } else {
+                    dateLastUpdated = null;
+                }
+
+                mExerciseList.add(new Exercise(c.getString(nameIndex),Double.parseDouble(c.getString(currentWeightIndex)),previousWeight,dateLastUpdated));
                 c.moveToNext();
             }
 
@@ -206,25 +219,6 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
         }
 
         // CLose the database
-        db.close();
-
-    }
-
-    public void insertDbTest(){
-
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-        // INsert some content
-        ContentValues values = new ContentValues();
-        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME,"Bench Press (Incline)");
-        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY,"chest");
-        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT,"40.0");
-
-        //Insert() returns the primary key value of the new row
-        long newRowId=db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,null,values);
-        Log.i("Database Updated", "New Row ID : " + newRowId);
-
-        // Close the database
         db.close();
 
     }
