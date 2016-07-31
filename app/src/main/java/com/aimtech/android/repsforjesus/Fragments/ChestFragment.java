@@ -80,6 +80,7 @@ public class ChestFragment extends Fragment {
                 String dialogTitle = currentItem.getName();
 
                 ChangeWeightDialog dialogFragment = ChangeWeightDialog.newInstance(dialogTitle);
+
                 dialogFragment.setTargetFragment(ChestFragment.this,0);
                 dialogFragment.show(fm,"fragment_edit_weight");
             }

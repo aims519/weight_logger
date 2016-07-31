@@ -9,4 +9,9 @@
     <string name="category_back">back</string>
     <string name="category_arms">arms</string>
     <string name="category_legs">legs</string>
+
+
+    <!-- Units -->
+    <string name="units_kilograms">Kg</string>
+    <string name="units_pounds">Lb</string>
 </resources>
