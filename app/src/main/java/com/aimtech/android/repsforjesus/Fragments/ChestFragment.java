@@ -6,9 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.aimtech.android.repsforjesus.Adapters.ExerciseListAdapter;
 import com.aimtech.android.repsforjesus.Model.Exercise;
@@ -51,28 +49,7 @@ public class ChestFragment extends Fragment {
         ListView exerciseListView = (ListView) rootView.findViewById(R.id.listViewChest);
         exerciseListView.setAdapter(adapter);
 
-        // Set up itemCLickListener for listview
-        exerciseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Exercise currentExercise = (Exercise) adapterView.getItemAtPosition(i);
-
-                Toast.makeText(getActivity(),"'" + currentExercise.getName() + "' exercise click",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Set up a long click listener
-        exerciseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Exercise currentExercise = (Exercise) adapterView.getItemAtPosition(i);
-
-                Toast.makeText(getActivity(),"'"+ currentExercise.getName() +"' exercise long click",Toast.LENGTH_SHORT).show();
-
-                return false;
-            }
-        });
-
+        //TODO Add the above to the database if they don't already exist
 
         return rootView;
     }

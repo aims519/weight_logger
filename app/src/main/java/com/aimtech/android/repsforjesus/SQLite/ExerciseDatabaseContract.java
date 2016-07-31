@@ -15,6 +15,7 @@ public class ExerciseDatabaseContract {
         public static final String TABLE_NAME = "exercises";
         public static final String COLUMN_NAME_ENTRY_ID = "entryid";
         public static final String COLUMN_NAME_NAME = "name";
+        public static final String COLUMN_NAME_CATEGORY = "category";
         public static final String COLUMN_NAME_CURRENT_WEIGHT = "current_weight";
         public static final String COLUMN_NAME_PREVIOUS_WEIGHT = "previous_weight";
         public static final String COLUMN_NAME_DATE_LAST_UPDATED = "date_last_updated";

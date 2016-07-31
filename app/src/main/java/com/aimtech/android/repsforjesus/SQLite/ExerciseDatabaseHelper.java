@@ -25,6 +25,7 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
                 ExerciseDatabaseContract.ExerciseTable._ID + " INTEGER PRIMARY KEY, " +
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_ENTRY_ID + " TEXT," +
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " TEXT," +
+                ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY + " TEXT," +
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT + " TEXT," +
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_PREVIOUS_WEIGHT + " TEXT," +
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED + " TEXT," +
