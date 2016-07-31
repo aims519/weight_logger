@@ -58,11 +58,13 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menu_main_reset:
-                //TODO display a dialog asking the user to confirm database reset
                 FragmentManager fm = getSupportFragmentManager();
                 DataBaseResetDialog dialogFragment = DataBaseResetDialog.newInstance("Warning");
                 dialogFragment.show(fm,"database_reset_dialog");
-
+                break;
+            default:
+                // Do nothing
+                break;
 
         }
         return true;

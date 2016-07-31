@@ -39,7 +39,7 @@ public class DataBaseResetDialog extends DialogFragment{
         alertDialogBuilder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //TODO reset the database from here
+                //Notifies main activity that a reset has been requested
                 mListener.onDatabaseReset();
             }
         });
