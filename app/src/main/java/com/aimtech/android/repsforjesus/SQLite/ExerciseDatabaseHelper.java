@@ -27,7 +27,7 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY + " TEXT," +
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT + " TEXT," +
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_PREVIOUS_WEIGHT + " TEXT," +
-                ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED + " TEXT," +
+                ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED + " TEXT" +
                 " )";
         sqLiteDatabase.execSQL(SQL_CREATE_ENTRIES);
     }
@@ -38,4 +38,5 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
         final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + ExerciseDatabaseContract.ExerciseTable.TABLE_NAME;
         sqLiteDatabase.execSQL(SQL_DELETE_ENTRIES);
     }
+
 }
