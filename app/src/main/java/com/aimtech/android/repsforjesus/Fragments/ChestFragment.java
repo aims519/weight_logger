@@ -12,9 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.aimtech.android.repsforjesus.Adapters.ExerciseListAdapter;
-import com.aimtech.android.repsforjesus.Dialogs.ChangeWeightDialog;
+import com.aimtech.android.repsforjesus.Dialogs.EditWeightDialog;
 import com.aimtech.android.repsforjesus.Model.Exercise;
 import com.aimtech.android.repsforjesus.R;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseContract;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChestFragment extends Fragment {
+public class ChestFragment extends Fragment implements EditWeightDialog.EditWeightDialogListener {
 
     private ArrayList<Exercise> mExerciseList;
     private ExerciseListAdapter adapter;
@@ -55,11 +56,11 @@ public class ChestFragment extends Fragment {
 
         // Reset the database
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-        mDbHelper.onUpgrade(db,mDbHelper.DATABASE_VERSION,mDbHelper.DATABASE_VERSION);
-        mDbHelper.onCreate(db);
+        //mDbHelper.onUpgrade(db,mDbHelper.DATABASE_VERSION,mDbHelper.DATABASE_VERSION);
+        //mDbHelper.onCreate(db);
 
         //Read the list of exercises from the database and put them into an arrayList
-        queryDbChest();
+        LoadChestList();
 
         // Set up adapter
         adapter = new ExerciseListAdapter(getContext(),mExerciseList);
@@ -81,7 +82,7 @@ public class ChestFragment extends Fragment {
                 Exercise currentItem = (Exercise) adapterView.getItemAtPosition(i);
                 String dialogTitle = currentItem.getName();
 
-                ChangeWeightDialog dialogFragment = ChangeWeightDialog.newInstance(dialogTitle);
+                EditWeightDialog dialogFragment = EditWeightDialog.newInstance(dialogTitle);
 
                 dialogFragment.setTargetFragment(ChestFragment.this,0);
                 dialogFragment.show(fm,"fragment_edit_weight");
@@ -93,9 +94,46 @@ public class ChestFragment extends Fragment {
         return rootView;
     }
 
-    public void queryDbChest(){
+    // Define what happens on save of a new weight
+
+
+    @Override
+    public void onSaveNewWeight(String exerciseName,String newWeight) {
+        Toast.makeText(getContext(),"'" +exerciseName + "' new weight : " + newWeight,Toast.LENGTH_SHORT).show();
+
+        //TODO save new weight to the database
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT,newWeight);
+
+        // Define selection so that only the correct exercise is updated
+        String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " = ?";
+        String[] selectionArgs = new String[]{exerciseName};
+
+        // Update
+        db.update(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+
+        db.close();
+
+        // Refresh the ArrayList with the new data
+        LoadChestList();
+
+        // NOtify adapter of change to data
+        adapter.notifyDataSetChanged();
+
+    }
+
+
+    public void LoadChestList(){
         // Get readable database
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        // Reset the arrayList
+        mExerciseList.clear();
 
         //Define a projection (columns to use for query)
         String[] projection = {
