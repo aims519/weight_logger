@@ -13,7 +13,6 @@ public class ExerciseDatabaseContract {
     // Inner class that defines contents of Exercise table
     public static abstract class ExerciseTable implements BaseColumns{
         public static final String TABLE_NAME = "exercises";
-        public static final String COLUMN_NAME_ENTRY_ID = "entryid";
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_CATEGORY = "category";
         public static final String COLUMN_NAME_CURRENT_WEIGHT = "current_weight";

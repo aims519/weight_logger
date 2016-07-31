@@ -23,7 +23,6 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         final String SQL_CREATE_ENTRIES = "CREATE TABLE IF NOT EXISTS " + ExerciseDatabaseContract.ExerciseTable.TABLE_NAME + " (" +
                 ExerciseDatabaseContract.ExerciseTable._ID + " INTEGER PRIMARY KEY, " +
-                ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_ENTRY_ID + " TEXT," +
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " TEXT," +
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY + " TEXT," +
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT + " TEXT," +
