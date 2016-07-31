@@ -68,10 +68,12 @@ public class ChestFragment extends Fragment {
         ListView exerciseListView = (ListView) rootView.findViewById(R.id.listViewChest);
         exerciseListView.setAdapter(adapter);
 
-        //Set onClick method for list items
-        exerciseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+        // Set on long click listener for list items
+        exerciseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // Display the dialog
                 android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
 
@@ -83,6 +85,8 @@ public class ChestFragment extends Fragment {
 
                 dialogFragment.setTargetFragment(ChestFragment.this,0);
                 dialogFragment.show(fm,"fragment_edit_weight");
+
+                return false;
             }
         });
 
