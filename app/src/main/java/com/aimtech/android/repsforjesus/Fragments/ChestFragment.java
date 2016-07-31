@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.aimtech.android.repsforjesus.Adapters.ExerciseListAdapter;
+import com.aimtech.android.repsforjesus.Dialogs.ChangeWeightDialog;
 import com.aimtech.android.repsforjesus.Model.Exercise;
 import com.aimtech.android.repsforjesus.R;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseContract;
@@ -65,6 +67,23 @@ public class ChestFragment extends Fragment {
         // Hook up ListView to adapter
         ListView exerciseListView = (ListView) rootView.findViewById(R.id.listViewChest);
         exerciseListView.setAdapter(adapter);
+
+        //Set onClick method for list items
+        exerciseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Display the dialog
+                android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
+
+                // Get name of current item to use in title
+                Exercise currentItem = (Exercise) adapterView.getItemAtPosition(i);
+                String dialogTitle = currentItem.getName();
+
+                ChangeWeightDialog dialogFragment = ChangeWeightDialog.newInstance(dialogTitle);
+                dialogFragment.setTargetFragment(ChestFragment.this,0);
+                dialogFragment.show(fm,"fragment_edit_weight");
+            }
+        });
 
         return rootView;
     }

@@ -10,14 +10,14 @@ import android.support.v4.app.DialogFragment;
 /**
  * Created by Andy on 31/07/2016.
  */
-public class ChangeWeightDialogFragment extends DialogFragment {
+public class ChangeWeightDialog extends DialogFragment {
 
     // Required empty constructor
-    public ChangeWeightDialogFragment() {
+    public ChangeWeightDialog() {
     }
 
-    public static ChangeWeightDialogFragment newInstance(String title) {
-        ChangeWeightDialogFragment frag = new ChangeWeightDialogFragment();
+    public static ChangeWeightDialog newInstance(String title) {
+        ChangeWeightDialog frag = new ChangeWeightDialog();
         Bundle args = new Bundle();
         args.putString("title", title);
         frag.setArguments(args);
@@ -30,7 +30,7 @@ public class ChangeWeightDialogFragment extends DialogFragment {
         String title = getArguments().getString("title");
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle(title);
-        alertDialogBuilder.setMessage("Change Weight");
+        alertDialogBuilder.setMessage("New Weight : ");
         alertDialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
