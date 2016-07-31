@@ -16,6 +16,7 @@ public class Exercise {
 
     public Exercise(String mName, @Nullable Double mCurrentWeight, @Nullable Double mPreviousWeight, @Nullable Date mDateLastUpdated ) {
 
+
         this.mName = mName;
 
         if(mPreviousWeight != null){

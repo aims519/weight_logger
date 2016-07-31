@@ -32,6 +32,8 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
             "Sit Down Pull Down",
     };
 
+    //TODO add master list for arms and legs
+
     // Default Constructor
     public ExerciseDatabaseHelper(Context context) {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -88,6 +90,8 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
             long newRowId=db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,null,values);
             Log.i("Database Updated", "New Row ID : " + newRowId);
         }
+
+        //TODO insert master list for arms and legs
     }
 
 
