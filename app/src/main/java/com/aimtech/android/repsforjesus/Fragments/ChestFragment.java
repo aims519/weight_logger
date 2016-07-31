@@ -21,7 +21,10 @@ import com.aimtech.android.repsforjesus.R;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseContract;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -102,15 +105,28 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
         Toast.makeText(getContext(),"'" +exerciseName + "' new weight : " + newWeight,Toast.LENGTH_SHORT).show();
 
         //TODO save new weight to the database
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
+
+        // Get the current weight so that it can be transferred to previous weight
+        String currentWeight = getCurrentWeightForExercise(exerciseName);
+
+        // Get today's date
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        String formattedDate = dateFormat.format(now);
+
+        // New values to put in to database. Only do this if dialog editText is not blank
         ContentValues values = new ContentValues();
         values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT,newWeight);
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_PREVIOUS_WEIGHT,currentWeight);
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED,formattedDate);
 
         // Define selection so that only the correct exercise is updated
         String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " = ?";
         String[] selectionArgs = new String[]{exerciseName};
 
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
         // Update
         db.update(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,
                 values,
@@ -210,6 +226,62 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
 
         // Close the database
         db.close();
+
+    }
+
+    private String getCurrentWeightForExercise(String exerciseName){
+        String currentWeight = "";
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        //Define a projection (columns to use for query)
+        String[] projection = {
+                ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT,
+        };
+
+        //Define a sort order
+        String sortOrder = ExerciseDatabaseContract.ExerciseTable._ID + " ASC";
+
+        // Define a query, i.e return only rows with the specified category
+        String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " = ?";
+        String[] selectionArgs = new String[]{exerciseName};
+
+        try{
+            // Query the database and return the results in a cursor
+            Cursor c = db.query(
+                    ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,
+                    projection,
+                    selection,
+                    selectionArgs,
+                    null,
+                    null,
+                    sortOrder
+            );
+
+            int currentWeightIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT);
+
+            // print the results of the query
+            c.moveToFirst();
+
+            // Create an Exercise Object for each row returned in the query and add to arrayList
+            while ( c != null) {
+                Log.i("Current Weight Returned", c.getString(currentWeightIndex));
+                currentWeight = c.getString(currentWeightIndex);
+                c.moveToNext();
+            }
+
+            // Close the cursor
+            c.close();
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        // CLose the database
+        db.close();
+
+        return currentWeight;
+
 
     }
 
