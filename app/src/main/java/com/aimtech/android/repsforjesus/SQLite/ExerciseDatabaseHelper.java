@@ -9,7 +9,7 @@ import android.util.Log;
 /**
  * Created by Andy on 31/07/2016.
  */
-public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
+public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version
     public static final int DATABASE_VERSION = 1;
@@ -36,7 +36,7 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
 
     // Default Constructor
     public ExerciseDatabaseHelper(Context context) {
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     // SQL code to create the database
@@ -65,35 +65,34 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
 
 
     // function to initialise all the default exercies with 0 current weights to start with
-    private void insertDefaultLines(SQLiteDatabase db){
+    private void insertDefaultLines(SQLiteDatabase db) {
 
         // Insert default chest exercises
-        for(int i =0;i<masterListChest.length;i++){
+        for (int i = 0; i < masterListChest.length; i++) {
             ContentValues values = new ContentValues();
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME,masterListChest[i]);
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME, masterListChest[i]);
             values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "chest");
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT,"0.0");
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, "0.0");
 
             //Insert() returns the primary key value of the new row
-            long newRowId=db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,null,values);
+            long newRowId = db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME, null, values);
             Log.i("Database Updated", "New Row ID : " + newRowId);
         }
 
         // Insert default Back exercises
-        for(int i =0;i<masterListBack.length;i++){
+        for (int i = 0; i < masterListBack.length; i++) {
             ContentValues values = new ContentValues();
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME,masterListBack[i]);
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME, masterListBack[i]);
             values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "back");
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT,"0.0");
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, "0.0");
 
             //Insert() returns the primary key value of the new row
-            long newRowId=db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,null,values);
+            long newRowId = db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME, null, values);
             Log.i("Database Updated", "New Row ID : " + newRowId);
         }
 
         //TODO insert master list for arms and legs
     }
-
 
 
 }

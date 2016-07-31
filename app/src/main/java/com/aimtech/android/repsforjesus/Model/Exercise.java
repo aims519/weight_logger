@@ -14,20 +14,20 @@ public class Exercise {
     private Date mDateLastUpdated;
     private String mName;
 
-    public Exercise(String mName, @Nullable Double mCurrentWeight, @Nullable Double mPreviousWeight, @Nullable Date mDateLastUpdated ) {
+    public Exercise(String mName, @Nullable Double mCurrentWeight, @Nullable Double mPreviousWeight, @Nullable Date mDateLastUpdated) {
 
 
         this.mName = mName;
 
-        if(mPreviousWeight != null){
+        if (mPreviousWeight != null) {
             this.mPreviousWeight = mPreviousWeight;
         }
 
-        if(mCurrentWeight != null){
+        if (mCurrentWeight != null) {
             this.mCurrentWeight = mCurrentWeight;
         }
 
-        if(mDateLastUpdated != null){
+        if (mDateLastUpdated != null) {
             this.mDateLastUpdated = mDateLastUpdated;
         }
 

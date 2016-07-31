@@ -15,7 +15,7 @@ import com.aimtech.android.repsforjesus.Fragments.LegsFragment;
 public class CategoryPagerAdapter extends FragmentPagerAdapter {
 
     private final int PAGE_COUNT = 4;
-    private final String[] categoryTitleStrings = new String[]{"Chest","Back","Arms","Legs"};
+    private final String[] categoryTitleStrings = new String[]{"Chest", "Back", "Arms", "Legs"};
 
     // Requires this emtpy constructor
     public CategoryPagerAdapter(FragmentManager fm) {
@@ -24,7 +24,7 @@ public class CategoryPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
+        switch (position) {
             case 0:
                 return new ChestFragment();
             case 1:

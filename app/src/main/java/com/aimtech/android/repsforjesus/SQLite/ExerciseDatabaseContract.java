@@ -8,10 +8,13 @@ import android.provider.BaseColumns;
 public class ExerciseDatabaseContract {
 
     // TO prevent accidentally instantiating the contract class, give it an empty constructor
-    public ExerciseDatabaseContract(){};
+    public ExerciseDatabaseContract() {
+    }
+
+    ;
 
     // Inner class that defines contents of Exercise table
-    public static abstract class ExerciseTable implements BaseColumns{
+    public static abstract class ExerciseTable implements BaseColumns {
         public static final String TABLE_NAME = "exercises";
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_CATEGORY = "category";

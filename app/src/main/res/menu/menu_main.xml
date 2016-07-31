@@ -2,8 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/main_menu_settings"
+        android:title="Settings"
+        app:showAsAction="never"></item>
+    <item
         android:id="@+id/menu_main_reset"
         android:title="Reset"
-        app:showAsAction="never">
-    </item>
+        app:showAsAction="never"></item>
 </menu>

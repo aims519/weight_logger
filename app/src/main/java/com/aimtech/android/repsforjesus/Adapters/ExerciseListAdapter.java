@@ -30,9 +30,9 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
 
         // Check if existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
-        if(listItemView==null){
+        if (listItemView == null) {
             // Layout inflater turns an xml file into actual View objects
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.exercise_list_item,parent,false);
+            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.exercise_list_item, parent, false);
         }
 
         // Hook up views in the layout
@@ -43,19 +43,19 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         // Display Data
         Exercise currentExercise = getItem(position);
         exerciseNameTextView.setText(currentExercise.getName());
-        currentWeightTextView.setText(String.valueOf(currentExercise.getCurrentWeight())+" Kg");
+        currentWeightTextView.setText(String.valueOf(currentExercise.getCurrentWeight()) + " Kg");
 
         // If any previous data exists, display it
 
 
-        if(currentExercise.getPreviousWeight() != null && currentExercise.getPreviousWeight() > 0 && currentExercise.getDateLastUpdated() != null){
+        if (currentExercise.getPreviousWeight() != null && currentExercise.getPreviousWeight() > 0 && currentExercise.getDateLastUpdated() != null) {
             // Format the Date
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
             String formattedDate = dateFormat.format(currentExercise.getDateLastUpdated());
 
             previouslyTextView.setText("Previously " + currentExercise.getPreviousWeight() + " Kg on " + formattedDate);
         } else {
-            Log.d("Previous Weight Null","No Data for " + currentExercise.getName());
+            Log.d("Previous Weight Null", "No Data for " + currentExercise.getName());
         }
 
 

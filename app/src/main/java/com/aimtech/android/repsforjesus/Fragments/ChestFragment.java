@@ -48,7 +48,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
                              Bundle savedInstanceState) {
 
         // Inflate the layout from XML file
-        View rootView = inflater.inflate(R.layout.fragment_chest,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_chest, container, false);
 
         // Set up the arrayList before query
         mExerciseList = new ArrayList<Exercise>();
@@ -67,12 +67,11 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
         refreshExerciseList();
 
         // Set up adapter
-        adapter = new ExerciseListAdapter(getContext(),mExerciseList);
+        adapter = new ExerciseListAdapter(getContext(), mExerciseList);
 
         // Hook up ListView to adapter
         ListView exerciseListView = (ListView) rootView.findViewById(R.id.listViewChest);
         exerciseListView.setAdapter(adapter);
-
 
 
         // Set on long click listener for list items
@@ -88,8 +87,8 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
 
                 EditWeightDialog dialogFragment = EditWeightDialog.newInstance(dialogTitle);
 
-                dialogFragment.setTargetFragment(ChestFragment.this,0);
-                dialogFragment.show(fm,"fragment_edit_weight");
+                dialogFragment.setTargetFragment(ChestFragment.this, 0);
+                dialogFragment.show(fm, "fragment_edit_weight");
 
                 return false;
             }
@@ -101,7 +100,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
 
     // Define what happens on save of a new weight. Method from dialog interface
     @Override
-    public void onSaveNewWeight(String exerciseName,String newWeight) {
+    public void onSaveNewWeight(String exerciseName, String newWeight) {
 
         // Get the current weight so that it can be transferred to previous weight
         String currentWeight = getCurrentWeightForExercise(exerciseName);
@@ -114,9 +113,9 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
 
         // New values to put in to database. Only do this if dialog editText is not blank
         ContentValues values = new ContentValues();
-        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT,newWeight);
-        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_PREVIOUS_WEIGHT,currentWeight);
-        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED,formattedDate);
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, newWeight);
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_PREVIOUS_WEIGHT, currentWeight);
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED, formattedDate);
 
         // Define selection so that only the correct exercise is updated
         String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " = ?";
@@ -140,7 +139,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
     }
 
 
-    public void refreshExerciseList(){
+    public void refreshExerciseList() {
         // Get readable database
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
@@ -164,7 +163,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
         String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY + " = ?";
         String[] selectionArgs = new String[]{getString(R.string.category_chest)};
 
-        try{
+        try {
             // Query the database and return the results in a cursor
             Cursor c = db.query(
                     ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,
@@ -187,26 +186,26 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
             c.moveToFirst();
 
             // Create an Exercise Object for each row returned in the query and add to arrayList
-            while ( c != null) {
-                Log.i("Load Chest List", "Cursor Output : " + c.getString(idIndex) + ", " + c.getString(nameIndex) + ", " + c.getString(cateroryIndex) + ", " + c.getString(currentWeightIndex)+ ", " + c.getString(previousWeightIndex)+ ", " + c.getString(dateLastUpdatedIndex));
+            while (c != null) {
+                Log.i("Load Chest List", "Cursor Output : " + c.getString(idIndex) + ", " + c.getString(nameIndex) + ", " + c.getString(cateroryIndex) + ", " + c.getString(currentWeightIndex) + ", " + c.getString(previousWeightIndex) + ", " + c.getString(dateLastUpdatedIndex));
 
                 // Deal with possible null values
                 Double previousWeight;
                 Date dateLastUpdated;
-                if(c.getString(previousWeightIndex) != null){
+                if (c.getString(previousWeightIndex) != null) {
                     previousWeight = Double.parseDouble(c.getString(previousWeightIndex));
                 } else {
                     previousWeight = null;
                 }
 
-                if(c.getString(dateLastUpdatedIndex) != null){
+                if (c.getString(dateLastUpdatedIndex) != null) {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
                     dateLastUpdated = dateFormat.parse(c.getString(dateLastUpdatedIndex));
                 } else {
                     dateLastUpdated = null;
                 }
 
-                mExerciseList.add(new Exercise(c.getString(nameIndex),Double.parseDouble(c.getString(currentWeightIndex)),previousWeight,dateLastUpdated));
+                mExerciseList.add(new Exercise(c.getString(nameIndex), Double.parseDouble(c.getString(currentWeightIndex)), previousWeight, dateLastUpdated));
                 c.moveToNext();
             }
 
@@ -214,7 +213,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
             c.close();
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -223,7 +222,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
 
     }
 
-    private String getCurrentWeightForExercise(String exerciseName){
+    private String getCurrentWeightForExercise(String exerciseName) {
         String currentWeight = "";
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
@@ -239,7 +238,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
         String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " = ?";
         String[] selectionArgs = new String[]{exerciseName};
 
-        try{
+        try {
             // Query the database and return the results in a cursor
             Cursor c = db.query(
                     ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,
@@ -257,7 +256,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
             c.moveToFirst();
 
             // Create an Exercise Object for each row returned in the query and add to arrayList
-            while ( c != null) {
+            while (c != null) {
                 Log.i("Current Weight Returned", c.getString(currentWeightIndex));
                 currentWeight = c.getString(currentWeightIndex);
                 c.moveToNext();
@@ -267,7 +266,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
             c.close();
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

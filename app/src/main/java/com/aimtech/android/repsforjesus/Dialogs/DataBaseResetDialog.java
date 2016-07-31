@@ -11,7 +11,7 @@ import android.support.v7.app.AlertDialog;
 /**
  * Created by Andy on 31/07/2016.
  */
-public class DataBaseResetDialog extends DialogFragment{
+public class DataBaseResetDialog extends DialogFragment {
 
     DatabaseResetListener mListener;
 
@@ -19,7 +19,7 @@ public class DataBaseResetDialog extends DialogFragment{
     public DataBaseResetDialog() {
     }
 
-    public static DataBaseResetDialog newInstance(String title){
+    public static DataBaseResetDialog newInstance(String title) {
         DataBaseResetDialog frag = new DataBaseResetDialog();
         Bundle args = new Bundle();
         args.putString("title", title);
@@ -51,7 +51,7 @@ public class DataBaseResetDialog extends DialogFragment{
             }
         });
 
-        AlertDialog newDialog=  alertDialogBuilder.create();
+        AlertDialog newDialog = alertDialogBuilder.create();
         return newDialog;
     }
 
@@ -63,7 +63,7 @@ public class DataBaseResetDialog extends DialogFragment{
     public void onAttach(Context context) {
         super.onAttach(context);
         // verify that the host activity implements the callback interface
-        try{
+        try {
             mListener = (DatabaseResetListener) getActivity();
         } catch (ClassCastException e) {
             //The activity/fragment doesn't implement the interface. Throw exception

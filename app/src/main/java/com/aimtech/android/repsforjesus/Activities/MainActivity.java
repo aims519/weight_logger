@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main,menu);
+        inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -56,11 +56,11 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
     // Respond to menu clicks
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_main_reset:
                 FragmentManager fm = getSupportFragmentManager();
                 DataBaseResetDialog dialogFragment = DataBaseResetDialog.newInstance("Warning");
-                dialogFragment.show(fm,"database_reset_dialog");
+                dialogFragment.show(fm, "database_reset_dialog");
                 break;
             default:
                 // Do nothing
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         ExerciseDatabaseHelper databaseHelper = new ExerciseDatabaseHelper(this);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         // Reset the database by calling the onUpgrade method. Keep the version the same
-        databaseHelper.onUpgrade(db, ExerciseDatabaseHelper.DATABASE_VERSION,ExerciseDatabaseHelper.DATABASE_VERSION);
+        databaseHelper.onUpgrade(db, ExerciseDatabaseHelper.DATABASE_VERSION, ExerciseDatabaseHelper.DATABASE_VERSION);
 
         // Create the database afresh
         databaseHelper.onCreate(db);

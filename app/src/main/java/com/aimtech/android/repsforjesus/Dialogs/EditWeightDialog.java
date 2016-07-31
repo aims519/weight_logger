@@ -34,7 +34,6 @@ public class EditWeightDialog extends DialogFragment {
     }
 
 
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -45,7 +44,6 @@ public class EditWeightDialog extends DialogFragment {
         alertDialogBuilder.setView(R.layout.fragment_edit_weight);
 
 
-
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
@@ -54,7 +52,7 @@ public class EditWeightDialog extends DialogFragment {
                 // Send the positive button event back to the host fragment
                 Dialog f = (Dialog) dialogInterface;
                 mNewWeightEditText = (EditText) f.findViewById(R.id.newWeightText);
-                mListener.onSaveNewWeight(title,mNewWeightEditText.getText().toString());
+                mListener.onSaveNewWeight(title, mNewWeightEditText.getText().toString());
             }
         });
 
@@ -76,8 +74,8 @@ public class EditWeightDialog extends DialogFragment {
 
     // Define the listener interface. This must be implemented in any activity/fragment that wants to receive data from the
     // AlertDialog
-    public interface EditWeightDialogListener{
-        void onSaveNewWeight(String exerciseName,String newWeight);
+    public interface EditWeightDialogListener {
+        void onSaveNewWeight(String exerciseName, String newWeight);
     }
 
     // Override the Fragment.onAttach method to instantiate the EditWeightDialogListener
@@ -86,7 +84,7 @@ public class EditWeightDialog extends DialogFragment {
         super.onAttach(context);
 
         // verify that the host activity implements the callback interface
-        try{
+        try {
             mListener = (EditWeightDialogListener) getTargetFragment();
         } catch (ClassCastException e) {
             //The activity/fragment doesn't implement the interface. Throw exception
