@@ -44,15 +44,20 @@ public class ChestFragment extends Fragment {
         // Inflate the layout from XML file
         View rootView = inflater.inflate(R.layout.fragment_chest,container,false);
 
-        // Set up the list of Chest exercises
+        // Set up the arrayList before query
         mExerciseList = new ArrayList<Exercise>();
-        mExerciseList.add(new Exercise("Bench Press",47.5,null,null));
-        mExerciseList.add(new Exercise("Bench Press (Incline)",40.0,null,null));
-        mExerciseList.add(new Exercise("Pectoral Fly",54.0,null,null));
-        mExerciseList.add(new Exercise("Chest Press",45.0,null,null));
-        
-        //TODO read the list of exercises from the database and put them into an arrayList
-        
+
+        // Get a readable database
+        mDbHelper = new ExerciseDatabaseHelper(getActivity());
+
+
+        // Reset the database
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+        mDbHelper.onUpgrade(db,mDbHelper.DATABASE_VERSION,mDbHelper.DATABASE_VERSION);
+        mDbHelper.onCreate(db);
+
+        //Read the list of exercises from the database and put them into an arrayList
+        queryDbChest();
 
         // Set up adapter
         adapter = new ExerciseListAdapter(getContext(),mExerciseList);
@@ -60,22 +65,6 @@ public class ChestFragment extends Fragment {
         // Hook up ListView to adapter
         ListView exerciseListView = (ListView) rootView.findViewById(R.id.listViewChest);
         exerciseListView.setAdapter(adapter);
-
-        // Get a writable database
-        mDbHelper = new ExerciseDatabaseHelper(getActivity());
-
-
-        // Reset the database
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        mDbHelper.onUpgrade(db,mDbHelper.DATABASE_VERSION,mDbHelper.DATABASE_VERSION);
-        mDbHelper.onCreate(db);
-
-
-
-        // Insert/Query the database
-        //insertDbTest();
-        queryDbChest();
-
 
         return rootView;
     }
@@ -97,13 +86,17 @@ public class ChestFragment extends Fragment {
         //Define a sort order
         String sortOrder = ExerciseDatabaseContract.ExerciseTable._ID + " ASC";
 
+        // Define a query, i.e return only rows with the specified category
+        String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY + " = ?";
+        String[] selectionArgs = new String[]{getString(R.string.category_chest)};
+
         try{
             // Query the database and return the results in a cursor
             Cursor c = db.query(
                     ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,
                     projection,
-                    null,
-                    null,
+                    selection,
+                    selectionArgs,
                     null,
                     null,
                     sortOrder
@@ -119,15 +112,15 @@ public class ChestFragment extends Fragment {
             // print the results of the query
             c.moveToFirst();
 
+            // Create an Exercise Object for each row returned in the query and add to arrayList
             while ( c != null) {
                 Log.i("Cursor Output", c.getString(idIndex) + ", " + c.getString(nameIndex) + ", " + c.getString(cateroryIndex) + ", " + c.getString(currentWeightIndex)+ ", " + c.getString(previousWeightIndex)+ ", " + c.getString(dateLastUpdatedIndex));
+                mExerciseList.add(new Exercise(c.getString(nameIndex),Double.parseDouble(c.getString(currentWeightIndex)),null,null));
                 c.moveToNext();
             }
 
             // Close the cursor
             c.close();
-
-
 
 
         }catch (Exception e){

@@ -25,6 +25,13 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
             "Converging Chest Press"
     };
 
+    // Master List of default BACK Exercises
+    String[] masterListBack = new String[]{
+            "Diverging Seated Row",
+            "Face",
+            "Sit Down Pull Down",
+    };
+
     // Default Constructor
     public ExerciseDatabaseHelper(Context context) {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
@@ -62,7 +69,19 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper{
         for(int i =0;i<masterListChest.length;i++){
             ContentValues values = new ContentValues();
             values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME,masterListChest[i]);
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY,"chest");
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "chest");
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT,"0.0");
+
+            //Insert() returns the primary key value of the new row
+            long newRowId=db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,null,values);
+            Log.i("Database Updated", "New Row ID : " + newRowId);
+        }
+
+        // Insert default Back exercises
+        for(int i =0;i<masterListBack.length;i++){
+            ContentValues values = new ContentValues();
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME,masterListBack[i]);
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "back");
             values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT,"0.0");
 
             //Insert() returns the primary key value of the new row
