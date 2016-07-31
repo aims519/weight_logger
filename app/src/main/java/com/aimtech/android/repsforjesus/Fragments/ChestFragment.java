@@ -64,7 +64,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
 
         //Read the list of exercises from the database and put them into an arrayList
         // Clears the array list first
-        LoadChestList();
+        refreshExerciseList();
 
         // Set up adapter
         adapter = new ExerciseListAdapter(getContext(),mExerciseList);
@@ -132,7 +132,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
         db.close();
 
         // Refresh the ArrayList with the new data
-        LoadChestList();
+        refreshExerciseList();
 
         // NOtify adapter of change to data
         adapter.notifyDataSetChanged();
@@ -140,7 +140,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
     }
 
 
-    public void LoadChestList(){
+    public void refreshExerciseList(){
         // Get readable database
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 

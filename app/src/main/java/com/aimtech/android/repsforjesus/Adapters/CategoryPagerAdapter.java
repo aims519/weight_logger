@@ -48,4 +48,10 @@ public class CategoryPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return categoryTitleStrings[position];
     }
+
+    @Override
+    public int getItemPosition(Object object) {
+        // always return position none so that fragments are refreshed when calling notifyDataSetChanged
+        return POSITION_NONE;
+    }
 }
