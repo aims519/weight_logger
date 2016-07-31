@@ -5,6 +5,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.aimtech.android.repsforjesus.Adapters.CategoryPagerAdapter;
 import com.aimtech.android.repsforjesus.R;
@@ -31,5 +33,13 @@ public class MainActivity extends AppCompatActivity {
         // Set up tab layout and link to the viewpager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    //Inflate the main menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main,menu);
+        return true;
     }
 }
