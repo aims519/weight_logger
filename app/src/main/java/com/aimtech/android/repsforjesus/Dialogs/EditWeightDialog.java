@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.aimtech.android.repsforjesus.R;
 
@@ -47,6 +48,9 @@ public class EditWeightDialog extends DialogFragment {
 
         // Hook up delete button
         ImageButton deleteButton = (ImageButton) view.findViewById(R.id.deleteExerciseButton);
+        //Hook up EditText
+        final EditText newWeightEditText = (EditText) view.findViewById(R.id.newWeightText);
+
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,10 +69,21 @@ public class EditWeightDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                // Send the positive button event back to the host fragment
-                Dialog f = (Dialog) dialogInterface;
-                mNewWeightEditText = (EditText) f.findViewById(R.id.newWeightText);
-                mListener.onSaveNewWeight(title, mNewWeightEditText.getText().toString());
+                // CHeck to make sure a weight has been entered
+                String newWeightEntered = newWeightEditText.getText().toString();
+                if(newWeightEntered.isEmpty()){
+                    Toast.makeText(getContext(),"Invalid. Please enter a weight.",Toast.LENGTH_SHORT).show();
+                } else if (Double.parseDouble(newWeightEntered) < 0){
+                    Toast.makeText(getContext(),"Invalid. Mass must be positive due to physics.",Toast.LENGTH_SHORT).show();
+                } else {
+                    // Send the positive button event back to the host fragment
+                    Dialog f = (Dialog) dialogInterface;
+                    mNewWeightEditText = (EditText) f.findViewById(R.id.newWeightText);
+                    mListener.onSaveNewWeight(title, mNewWeightEditText.getText().toString());
+                    getDialog().dismiss();
+                }
+
+
             }
         });
 
