@@ -19,12 +19,11 @@ import com.aimtech.android.repsforjesus.Model.Exercise;
 import com.aimtech.android.repsforjesus.R;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseContract;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseHelper;
+import com.aimtech.android.repsforjesus.Utility;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -108,8 +107,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
         // Get today's date
         Calendar calendar = Calendar.getInstance();
         Date now = calendar.getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
-        String formattedDate = dateFormat.format(now);
+        String formattedDate = Utility.formatDateToString(now);
 
         // New values to put in to database. Only do this if dialog editText is not blank
         ContentValues values = new ContentValues();
@@ -199,8 +197,8 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
                 }
 
                 if (c.getString(dateLastUpdatedIndex) != null) {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
-                    dateLastUpdated = dateFormat.parse(c.getString(dateLastUpdatedIndex));
+                    // Parse String to Date
+                    dateLastUpdated = Utility.parseStringToDate(c.getString(dateLastUpdatedIndex));
                 } else {
                     dateLastUpdated = null;
                 }

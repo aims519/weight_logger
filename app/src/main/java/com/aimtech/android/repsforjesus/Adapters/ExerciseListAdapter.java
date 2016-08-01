@@ -10,10 +10,9 @@ import android.widget.TextView;
 
 import com.aimtech.android.repsforjesus.Model.Exercise;
 import com.aimtech.android.repsforjesus.R;
+import com.aimtech.android.repsforjesus.Utility;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Andy on 30/07/2016.
@@ -50,8 +49,7 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
 
         if (currentExercise.getPreviousWeight() != null && currentExercise.getPreviousWeight() > 0 && currentExercise.getDateLastUpdated() != null) {
             // Format the Date
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
-            String formattedDate = dateFormat.format(currentExercise.getDateLastUpdated());
+            String formattedDate = Utility.formatDateToString(currentExercise.getDateLastUpdated());
 
             previouslyTextView.setText("Previously " + currentExercise.getPreviousWeight() + " Kg on " + formattedDate);
         } else {
