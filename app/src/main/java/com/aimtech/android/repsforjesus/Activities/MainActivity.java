@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Register OnSharedPreferenceChance Listener
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+
         // Set up toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
@@ -54,6 +57,15 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         // Set up tab layout and link to the viewpager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(mViewPager);
+
+    }
+
+    // OnResumeCallback refresh data
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //TODO refresh only when the sort order preference has been changed
+        refreshUI();
     }
 
     //Inflate the main menu
@@ -164,8 +176,5 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         // If the sort order prefernce is changed, immediately refresh the UI
-        if(s.equals(getString(R.string.pref_sort_order_key))){
-            refreshUI();
-        }
     }
 }

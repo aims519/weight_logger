@@ -1,6 +1,8 @@
 package com.aimtech.android.repsforjesus.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,32 +50,50 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         exerciseNameTextView.setText(currentExercise.getName());
         currentWeightTextView.setText(String.valueOf(currentExercise.getCurrentWeight()) + " Kg");
 
+
         // If user hasn't increased the weight in a week, display a message
-        if (currentExercise.getPreviousWeight() != null && currentExercise.getPreviousWeight() > 0 && currentExercise.getDateLastUpdated() != null) {
-            // Get today's date
-            Calendar calendar = Calendar.getInstance();
-            Date now = calendar.getTime();
+        // Only do this if the shared preference for showing messages is true
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        Boolean showOverdueMessagesPref = prefs.getBoolean(getContext().getString(R.string.pref_show_days_since_increase_key),Boolean.parseBoolean(getContext().getString(R.string.pref_show_days_since_increase_default)));
+        String maxDaysBeforeMovingUpString = prefs.getString(getContext().getString(R.string.pref_days_before_warning_key),getContext().getString(R.string.pref_days_before_warning_default));
+        int maxDaysInteger = Integer.parseInt(maxDaysBeforeMovingUpString);
+        Log.d(LOG_TAG,"ShowOverdue : " + showOverdueMessagesPref + ". Days : " + String.valueOf(maxDaysInteger));
 
-            // Get date last updated
-            Date lastUpdated = currentExercise.getDateLastUpdated();
+if(showOverdueMessagesPref.equals(true)){
 
-            // Calculate number of days passed
-            long daysPassed = TimeUnit.DAYS.convert(now.getTime()-lastUpdated.getTime(),TimeUnit.MILLISECONDS);
+    if (currentExercise.getPreviousWeight() != null && currentExercise.getPreviousWeight() > 0 && currentExercise.getDateLastUpdated() != null) {
+        // Get today's date
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
 
-            Log.d(LOG_TAG,currentExercise.getName() + ". Days passed since last update : " + daysPassed);
+        // Get date last updated
+        Date lastUpdated = currentExercise.getDateLastUpdated();
 
-            // Check if last updated date is more than 6 days before now
-            // TODO make sure weight is going up
-            if(daysPassed >= 7 && lastUpdated != null){
-                weightUpWarningTextView.setText("No change in " + daysPassed + " days...");
-            } else {
-                weightUpWarningTextView.setText("");
-            }
+        // Calculate number of days passed
+        long daysPassed = TimeUnit.DAYS.convert(now.getTime()-lastUpdated.getTime(),TimeUnit.MILLISECONDS);
 
+        Log.d(LOG_TAG,currentExercise.getName() + ". Days passed since last update : " + daysPassed);
+
+        // Check if last updated date is more than 6 days before now
+        // TODO make sure weight is going up
+        if(daysPassed >= maxDaysInteger && lastUpdated != null){
+            weightUpWarningTextView.setText("No change in " + daysPassed + " days...");
         } else {
-            Log.d(LOG_TAG, "Not enough data for date comparison. " + currentExercise.getName() + " values : " + currentExercise.toString());
             weightUpWarningTextView.setText("");
         }
+
+    } else {
+        Log.d(LOG_TAG, "Not enough data for date comparison. " + currentExercise.getName() + " values : " + currentExercise.toString());
+        weightUpWarningTextView.setText("");
+    }
+
+
+
+} else {
+    Log.d(LOG_TAG,"Suppress days overdue message");
+}
+
+
 
 
         return listItemView;

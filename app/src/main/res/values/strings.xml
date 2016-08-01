@@ -17,5 +17,9 @@
     <string name="pref_sort_order_default" translatable="false">alphabetical</string>
     <string name="pref_sort_order_key" translatable="false">pref_sort_order</string>
 
-    <string name="pref_show_additional_info_key" translatable="false">pref_display_additional_info</string>
+    <string name="pref_show_days_since_increase_key" translatable="false">pref_display_additional_info</string>
+    <string name="pref_show_days_since_increase_default" translatable="false">true</string>
+
+    <string name="pref_days_before_warning_key" translatable="false">pref_max_days_before_warning</string>
+    <string name="pref_days_before_warning_default" translatable="false">5</string>
 </resources>

@@ -9,10 +9,23 @@
         android:summary="%s">
     </ListPreference>
 
+
     <CheckBoxPreference
-        android:key="@string/pref_show_additional_info_key"
-        android:title="Display Additional Info"
+        android:key="@string/pref_show_days_since_increase_key"
+        android:title="Show Overdue Messages"
         android:defaultValue="true">
     </CheckBoxPreference>
+
+    <EditTextPreference
+        android:key="@string/pref_days_before_warning_key"
+        android:title="Max Days Before Moving up a Weight"
+        android:defaultValue="@string/pref_days_before_warning_default"
+        android:singleLine="true"
+        android:summary=""
+        android:inputType="number"
+        android:dependency="@string/pref_show_days_since_increase_key"
+        >
+
+    </EditTextPreference>
 
 </PreferenceScreen>
