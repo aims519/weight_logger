@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="spinner_chest">Chest</string>
+    <string name="spinner_back">Back</string>
+    <string name="spinner_arms">Arms</string>
+    <string name="spinner_legs">Legs</string>
+
     <string-array name="exercise_categories">
-        <item>Chest</item>
-        <item>Back</item>
-        <item>Arms</item>
-        <item>Legs</item>
+        <item>@string/spinner_chest</item>
+        <item>@string/spinner_back</item>
+        <item>@string/spinner_arms</item>
+        <item>@string/spinner_legs</item>
     </string-array>
 </resources>

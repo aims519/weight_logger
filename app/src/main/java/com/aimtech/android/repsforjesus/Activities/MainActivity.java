@@ -1,5 +1,6 @@
 package com.aimtech.android.repsforjesus.Activities;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -7,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,12 +18,14 @@ import com.aimtech.android.repsforjesus.Adapters.CategoryPagerAdapter;
 import com.aimtech.android.repsforjesus.Dialogs.DataBaseResetDialog;
 import com.aimtech.android.repsforjesus.Dialogs.NewExerciseDialog;
 import com.aimtech.android.repsforjesus.R;
+import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseContract;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseHelper;
 
-public class MainActivity extends AppCompatActivity implements DataBaseResetDialog.DatabaseResetListener {
+public class MainActivity extends AppCompatActivity implements DataBaseResetDialog.DatabaseResetListener,NewExerciseDialog.NewExerciseListener {
 
     private ViewPager mViewPager;
     private CategoryPagerAdapter mPagerAdapter;
+    private ExerciseDatabaseHelper databaseHelper;
 
 
     @Override
@@ -67,14 +71,13 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
                 dialogFragment.show(fm, "database_reset_dialog");
                 break;
             case R.id.main_menu_add_exercise:
-                Toast.makeText(this,"'Add Exercise' coming soon",Toast.LENGTH_LONG).show();
-
                 // Display the dialog
                 fm = getSupportFragmentManager();
-
                 NewExerciseDialog newExerciseDialogFragment = NewExerciseDialog.newInstance("New Exercise");
-
                 newExerciseDialogFragment.show(fm, "fragment_dialog_new_exercise");
+
+                //Dialog callback will update the database if a positive response is received
+
             default:
                 // Do nothing
                 break;
@@ -84,12 +87,10 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
     }
 
     // Callback for database reset (from Dialog)
-
-
     @Override
     public void onDatabaseReset() {
         //Reset the database if dialog response was positive
-        ExerciseDatabaseHelper databaseHelper = new ExerciseDatabaseHelper(this);
+        databaseHelper = new ExerciseDatabaseHelper(this);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         // Reset the database by calling the onUpgrade method. Keep the version the same
         databaseHelper.onUpgrade(db, ExerciseDatabaseHelper.DATABASE_VERSION, ExerciseDatabaseHelper.DATABASE_VERSION);
@@ -97,10 +98,50 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         // Create the database afresh
         databaseHelper.onCreate(db);
         db.close();
+        databaseHelper.close();
 
         //Refresh fragment UI
         // notifyDataSetChanged calls getItemPosition in the CategoryPagerAdapterClass
         // This always returns POSITION_NONE, which refreshes the fragment
         mPagerAdapter.notifyDataSetChanged();
+    }
+
+    // Callback for new exercise (from Dialog)
+
+
+    @Override
+    public void onSaveNewExercise(String name, String category, String startingWeight) {
+        // Update the database
+        databaseHelper = new ExerciseDatabaseHelper(this);
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
+        //determine the category //TODO remove restrictions for category other than chest
+        if(category.equals(getString(R.string.spinner_chest))){
+
+            ContentValues values = new ContentValues();
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME,name);
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "chest");
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, startingWeight);
+
+            // Insert
+            long newRowId = db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME, null, values);
+            Log.d("New Exercise Inserted",name + " exercise was successfully added to the database");
+
+            // Notify the user that item has been successfully added
+            Toast.makeText(this,"'" + name + "' exercise successfully added",Toast.LENGTH_LONG).show();
+
+        } else {
+            Toast.makeText(this,"'Chest' only. Other categories coming soon...",Toast.LENGTH_LONG).show();
+        }
+
+        db.close();
+        databaseHelper.close();
+
+        //Refresh fragment UI
+        // notifyDataSetChanged calls getItemPosition in the CategoryPagerAdapterClass
+        // This always returns POSITION_NONE, which refreshes the fragment
+        mPagerAdapter.notifyDataSetChanged();
+
+
     }
 }
