@@ -93,7 +93,22 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
             Log.i("Database Updated", "New Row ID : " + newRowId);
         }
 
+        demosSQLDataLoad(db);
+
         //TODO insert master list for arms and legs
+    }
+
+    //TODO remove this function after testing complete
+    private void demosSQLDataLoad(SQLiteDatabase db){
+        ContentValues values = new ContentValues();
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME, "Test Exercise 1");
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "chest");
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, "20.0");
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_PREVIOUS_WEIGHT, "10.0");
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED, "25/07/2016");
+
+        // Insert
+        long newRowId = db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME, null, values);
     }
 
 

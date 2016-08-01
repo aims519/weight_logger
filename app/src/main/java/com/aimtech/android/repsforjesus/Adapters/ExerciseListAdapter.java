@@ -10,14 +10,18 @@ import android.widget.TextView;
 
 import com.aimtech.android.repsforjesus.Model.Exercise;
 import com.aimtech.android.repsforjesus.R;
-import com.aimtech.android.repsforjesus.Utility;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Andy on 30/07/2016.
  */
 public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
+
+    private final String LOG_TAG = ExerciseListAdapter.class.getSimpleName();
 
     public ExerciseListAdapter(Context context, List<Exercise> objects) {
         super(context, 0, objects);
@@ -37,23 +41,38 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         // Hook up views in the layout
         TextView exerciseNameTextView = (TextView) listItemView.findViewById(R.id.exerciseNameTextView);
         TextView currentWeightTextView = (TextView) listItemView.findViewById(R.id.currentWeightTextView);
-        TextView previouslyTextView = (TextView) listItemView.findViewById(R.id.previouslyTextView);
+        TextView weightUpWarningTextView = (TextView) listItemView.findViewById(R.id.weightUpWarningTextView);
 
         // Display Data
         Exercise currentExercise = getItem(position);
         exerciseNameTextView.setText(currentExercise.getName());
         currentWeightTextView.setText(String.valueOf(currentExercise.getCurrentWeight()) + " Kg");
 
-        // If any previous data exists, display it
-
-
+        // If user hasn't increased the weight in a week, display a message
         if (currentExercise.getPreviousWeight() != null && currentExercise.getPreviousWeight() > 0 && currentExercise.getDateLastUpdated() != null) {
-            // Format the Date
-            String formattedDate = Utility.formatDateToString(currentExercise.getDateLastUpdated());
+            // Get today's date
+            Calendar calendar = Calendar.getInstance();
+            Date now = calendar.getTime();
 
-            previouslyTextView.setText("Previously " + currentExercise.getPreviousWeight() + " Kg on " + formattedDate);
+            // Get date last updated
+            Date lastUpdated = currentExercise.getDateLastUpdated();
+
+            // Calculate number of days passed
+            long daysPassed = TimeUnit.DAYS.convert(now.getTime()-lastUpdated.getTime(),TimeUnit.MILLISECONDS);
+
+            Log.d(LOG_TAG,currentExercise.getName() + ". Days passed since last update : " + daysPassed);
+
+            // Check if last updated date is more than 6 days before now
+            // TODO make sure weight is going up
+            if(daysPassed >= 7 && lastUpdated != null){
+                weightUpWarningTextView.setText("No change in " + daysPassed + " days...");
+            } else {
+                weightUpWarningTextView.setText("");
+            }
+
         } else {
-            Log.d("Previous Weight Null", "No Data for " + currentExercise.getName());
+            Log.d(LOG_TAG, "Not enough data for date comparison. " + currentExercise.getName() + " values : " + currentExercise.toString());
+            weightUpWarningTextView.setText("");
         }
 
 
