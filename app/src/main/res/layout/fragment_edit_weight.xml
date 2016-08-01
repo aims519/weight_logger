@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enter New Weight"
+        android:layout_marginLeft="-1dp"
         android:textSize="16sp" />
 
     <LinearLayout
@@ -25,7 +26,8 @@
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
             android:singleLine="true"
-            tools:text="45.5" />
+            android:layout_marginLeft="-5dp"
+            android:hint="0.0"/>
 
         <TextView
             android:layout_width="match_parent"
