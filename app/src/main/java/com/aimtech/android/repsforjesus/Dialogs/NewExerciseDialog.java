@@ -3,6 +3,8 @@ package com.aimtech.android.repsforjesus.Dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -12,8 +14,11 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.aimtech.android.repsforjesus.R;
+import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseContract;
+import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseHelper;
 
 /**
  * Created by Andy on 01/08/2016.
@@ -52,14 +57,85 @@ public class NewExerciseDialog extends DialogFragment {
 
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            // used to flag up a duplicate exercise when addding a new one
+            Boolean existingResultFound;
+
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 final EditText newExerciseNameEditText = (EditText) view.findViewById(R.id.newExerciseNameEditText);
                 final EditText startingWeightEditText = (EditText) view.findViewById(R.id.startingWeightEditText);
 
-                // Callback to MainActivity
-                mListener.onSaveNewExercise(newExerciseNameEditText.getText().toString(),spinner.getSelectedItem().toString(),startingWeightEditText.getText().toString());
+                // Strings for Validating Input
+                String newExerciseName = newExerciseNameEditText.getText().toString();
+                String newExerciseStartingWeight = startingWeightEditText.getText().toString();
+
+                // If nothing entered for a starting weight, default to zero
+                if(newExerciseStartingWeight.isEmpty()){
+                    newExerciseStartingWeight = "0.0";
+                }
+
+                //TODO Database query to make sure exercise does not exist yet
+                ExerciseDatabaseHelper databaseHelper = new ExerciseDatabaseHelper(getContext());
+                SQLiteDatabase db = databaseHelper.getReadableDatabase();
+
+                //Define a projection (columns to use for query)
+                String[] projection = {
+                        ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME,
+                };
+
+                //Define a sort order
+                String sortOrder = ExerciseDatabaseContract.ExerciseTable._ID + " ASC";
+
+                // Define a query, i.e return only rows with the name of the new exercise
+                String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME+ " LIKE ?";
+                String[] selectionArgs = new String[]{newExerciseName};
+
+                try {
+                    // Query the database and return the results in a cursor
+                    Cursor c = db.query(
+                            ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,
+                            projection,
+                            selection,
+                            selectionArgs,
+                            null,
+                            null,
+                            sortOrder
+                    );
+
+                    int nameIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME);
+
+                    // This will return false if the cursor is empty
+                    existingResultFound = c.moveToFirst();
+
+                    // Close the cursor
+                    c.close();
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+
+                if(newExerciseName.isEmpty()){
+
+                    Toast.makeText(getContext(),"Invalid. The exercise must have a name.",Toast.LENGTH_SHORT).show();
+
+                } else if(existingResultFound){
+
+                    // A duplicate has been found in the query above, notify the user
+                    Toast.makeText(getContext(),"An exercise called '" + newExerciseName + "' already exists!",Toast.LENGTH_LONG).show();
+                } else {
+
+                    // Proceed with addition of exercise
+                    // Callback to MainActivity
+                    mListener.onSaveNewExercise(newExerciseName,spinner.getSelectedItem().toString(),newExerciseStartingWeight.toString());
+                }
+
+
             }
         });
 
