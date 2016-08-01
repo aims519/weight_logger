@@ -87,7 +87,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
                 EditWeightDialog dialogFragment = EditWeightDialog.newInstance(dialogTitle);
 
                 dialogFragment.setTargetFragment(ChestFragment.this, 0);
-                dialogFragment.show(fm, "fragment_edit_weight");
+                dialogFragment.show(fm, "fragment_dialog_edit_weight");
 
                 return false;
             }

@@ -41,7 +41,7 @@ public class EditWeightDialog extends DialogFragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
         // Set the custom layout
-        alertDialogBuilder.setView(R.layout.fragment_edit_weight);
+        alertDialogBuilder.setView(R.layout.fragment_dialog_edit_weight);
 
 
         alertDialogBuilder.setTitle(title);

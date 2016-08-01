@@ -10,9 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.aimtech.android.repsforjesus.Adapters.CategoryPagerAdapter;
 import com.aimtech.android.repsforjesus.Dialogs.DataBaseResetDialog;
+import com.aimtech.android.repsforjesus.Dialogs.NewExerciseDialog;
 import com.aimtech.android.repsforjesus.R;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseHelper;
 
@@ -56,12 +58,23 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
     // Respond to menu clicks
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        FragmentManager fm;
+
         switch (item.getItemId()) {
             case R.id.menu_main_reset:
-                FragmentManager fm = getSupportFragmentManager();
+                fm = getSupportFragmentManager();
                 DataBaseResetDialog dialogFragment = DataBaseResetDialog.newInstance("Warning!");
                 dialogFragment.show(fm, "database_reset_dialog");
                 break;
+            case R.id.main_menu_add_exercise:
+                Toast.makeText(this,"'Add Exercise' coming soon",Toast.LENGTH_LONG).show();
+
+                // Display the dialog
+                fm = getSupportFragmentManager();
+
+                NewExerciseDialog newExerciseDialogFragment = NewExerciseDialog.newInstance("New Exercise");
+
+                newExerciseDialogFragment.show(fm, "fragment_dialog_new_exercise");
             default:
                 // Do nothing
                 break;
