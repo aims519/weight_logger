@@ -52,7 +52,7 @@
         android:background="@android:color/transparent"
         android:src="@drawable/ic_delete_black_24dp"
         android:id="@+id/deleteExerciseButton"
-        android:layout_marginLeft="80dp"/>
+        android:layout_marginLeft="78dp"/>
 
 
 
