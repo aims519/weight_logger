@@ -54,7 +54,7 @@ public class NewExerciseDialog extends DialogFragment {
         alertDialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // TODO save the new exercise to the database
+
                 final EditText newExerciseNameEditText = (EditText) view.findViewById(R.id.newExerciseNameEditText);
                 final EditText startingWeightEditText = (EditText) view.findViewById(R.id.startingWeightEditText);
 

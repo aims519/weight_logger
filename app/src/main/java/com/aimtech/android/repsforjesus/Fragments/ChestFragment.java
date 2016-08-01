@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.aimtech.android.repsforjesus.Adapters.ExerciseListAdapter;
+import com.aimtech.android.repsforjesus.Dialogs.DeleteExerciseDialog;
 import com.aimtech.android.repsforjesus.Dialogs.EditWeightDialog;
 import com.aimtech.android.repsforjesus.Model.Exercise;
 import com.aimtech.android.repsforjesus.R;
@@ -136,6 +137,18 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
 
     }
 
+    // Define what happens when the user deletes an exercise. Method from dialog interface
+    @Override
+    public void onExerciseDelete(String exerciseToDelete) {
+        Log.d("Delete button","User has selected to delete an exercise :" + exerciseToDelete);
+        // SHow the dialog to ask user to confirm
+        android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
+        DeleteExerciseDialog dialogFragment = DeleteExerciseDialog.newInstance("Warning!",exerciseToDelete);
+
+        dialogFragment.setTargetFragment(ChestFragment.this, 100);
+        dialogFragment.show(fm, "fragment_dialog_delete_exercise_warning");
+
+    }
 
     public void refreshExerciseList() {
         // Get readable database

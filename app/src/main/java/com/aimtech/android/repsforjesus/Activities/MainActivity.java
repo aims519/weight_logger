@@ -144,4 +144,10 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
 
 
     }
+
+    // Function to refresh UI. Called by the DeleteExercise dialog after an item has been deleted
+    public Boolean refreshUI(){
+        mPagerAdapter.notifyDataSetChanged();
+        return true;
+    }
 }

@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.aimtech.android.repsforjesus.R;
 
@@ -41,7 +43,20 @@ public class EditWeightDialog extends DialogFragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
         // Set the custom layout
-        alertDialogBuilder.setView(R.layout.fragment_dialog_edit_weight);
+        final View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_dialog_edit_weight,null);
+
+        // Hook up delete button
+        ImageButton deleteButton = (ImageButton) view.findViewById(R.id.deleteExerciseButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO delete the exercise from the database using a callback
+                // Dismiss the dialog
+                getDialog().dismiss();
+                // Pass the name of the exercise to the fragment so that it knows which to delete
+                mListener.onExerciseDelete(title);
+            }
+        });
 
 
         alertDialogBuilder.setTitle(title);
@@ -56,6 +71,8 @@ public class EditWeightDialog extends DialogFragment {
             }
         });
 
+
+
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -64,6 +81,7 @@ public class EditWeightDialog extends DialogFragment {
             }
         });
 
+        alertDialogBuilder.setView(view);
         // Make sure that the keyboard is shown when the dialog is created
         AlertDialog newDialog = alertDialogBuilder.create();
         newDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -72,10 +90,14 @@ public class EditWeightDialog extends DialogFragment {
         return newDialog;
     }
 
+
+
+
     // Define the listener interface. This must be implemented in any activity/fragment that wants to receive data from the
     // AlertDialog
     public interface EditWeightDialogListener {
         void onSaveNewWeight(String exerciseName, String newWeight);
+        void onExerciseDelete(String exerciseToDelete);
     }
 
     // Override the Fragment.onAttach method to instantiate the EditWeightDialogListener
