@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.aimtech.android.repsforjesus.Activities.MainActivity;
@@ -46,9 +45,7 @@ public class DeleteExerciseDialog extends DialogFragment {
         alertDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //TODO delete the item from the database
-                Log.d("Positive","Time to delete '"+ exerciseToDelete + "' from the database");
-
+                // Get database
                 ExerciseDatabaseHelper databaseHelper = new ExerciseDatabaseHelper(getContext());
                 SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
@@ -60,13 +57,15 @@ public class DeleteExerciseDialog extends DialogFragment {
                         selection,
                         selectionArgs);
 
+                // Clean up
                 db.close();
                 databaseHelper.close();
 
-                //TODO update the UI immediately
+                //Update the UI immediately
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.refreshUI();
 
+                // Notify the user that the delete was successful
                 Toast.makeText(getContext(),"'" + exerciseToDelete + "' has been deleted successfully",Toast.LENGTH_LONG).show();
             }
         });

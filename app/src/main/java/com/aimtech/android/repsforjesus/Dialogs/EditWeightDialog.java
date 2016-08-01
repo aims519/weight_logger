@@ -50,10 +50,11 @@ public class EditWeightDialog extends DialogFragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO delete the exercise from the database using a callback
+
                 // Dismiss the dialog
                 getDialog().dismiss();
-                // Pass the name of the exercise to the fragment so that it knows which to delete
+                // Callback. Pass the name of the exercise to the fragment so that it knows which to delete
+                // This is the title of the current dialog
                 mListener.onExerciseDelete(title);
             }
         });
