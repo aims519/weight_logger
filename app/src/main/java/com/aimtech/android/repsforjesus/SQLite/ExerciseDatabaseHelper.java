@@ -22,7 +22,9 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
             "Close Grip",
             "Pectoral Fly",
             "Peck Fly (Easy)",
-            "Converging Chest Press"
+            "Converging Chest Press",
+            "Two-Handed Fly",
+            "Two-Handed Fly (Face)"
     };
 
     // Master List of default BACK Exercises
