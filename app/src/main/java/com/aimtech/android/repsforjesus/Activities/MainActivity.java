@@ -2,6 +2,7 @@ package com.aimtech.android.repsforjesus.Activities;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -23,7 +24,7 @@ import com.aimtech.android.repsforjesus.R;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseContract;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseHelper;
 
-public class MainActivity extends AppCompatActivity implements DataBaseResetDialog.DatabaseResetListener,NewExerciseDialog.NewExerciseListener {
+public class MainActivity extends AppCompatActivity implements DataBaseResetDialog.DatabaseResetListener,NewExerciseDialog.NewExerciseListener,SharedPreferences.OnSharedPreferenceChangeListener {
 
     private ViewPager mViewPager;
     private CategoryPagerAdapter mPagerAdapter;
@@ -158,5 +159,13 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
     public Boolean refreshUI(){
         mPagerAdapter.notifyDataSetChanged();
         return true;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        // If the sort order prefernce is changed, immediately refresh the UI
+        if(s.equals(getString(R.string.pref_sort_order_key))){
+            refreshUI();
+        }
     }
 }

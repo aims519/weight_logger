@@ -2,9 +2,11 @@ package com.aimtech.android.repsforjesus.Fragments;
 
 
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -167,8 +169,22 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
                 ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED
         };
 
-        //Define a sort order
-        String sortOrder = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " ASC";
+        //Define a sort order. Read from preferences
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String sortOrderPref = prefs.getString(getString(R.string.pref_sort_order_key),getString(R.string.pref_sort_order_default));
+        String sortOrder;
+        switch (sortOrderPref){
+            case "alphabetical":
+                sortOrder = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " ASC";
+                break;
+            case "order_entered":
+                sortOrder = ExerciseDatabaseContract.ExerciseTable._ID + " ASC";
+                break;
+            default:
+                sortOrder = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " ASC";
+                break;
+        }
+
 
         // Define a query, i.e return only rows with the specified category
         String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY + " = ?";

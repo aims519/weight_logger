@@ -15,4 +15,7 @@
 
     <!-- Preference Strings -->
     <string name="pref_sort_order_default" translatable="false">alphabetical</string>
+    <string name="pref_sort_order_key" translatable="false">pref_sort_order</string>
+
+    <string name="pref_show_additional_info_key" translatable="false">pref_display_additional_info</string>
 </resources>
