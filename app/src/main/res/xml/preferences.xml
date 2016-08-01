@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="pref_sort_order"
+        android:title="Sort Order"
+        android:entries="@array/pref_sort_order_entries"
+        android:entryValues="@array/pref_sort_order_pref_values"
+        android:defaultValue="@string/pref_sort_order_default"
+        android:summary="%s"
+        >
+    </ListPreference>
+
+    <CheckBoxPreference
+        android:key="pref_display_additional_info"
+        android:title="Display Additional Info"
+        android:defaultValue="true">
+
+    </CheckBoxPreference>
+</PreferenceScreen>

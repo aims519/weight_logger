@@ -168,7 +168,7 @@ public class ChestFragment extends Fragment implements EditWeightDialog.EditWeig
         };
 
         //Define a sort order
-        String sortOrder = ExerciseDatabaseContract.ExerciseTable._ID + " ASC";
+        String sortOrder = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " ASC";
 
         // Define a query, i.e return only rows with the specified category
         String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY + " = ?";

@@ -12,4 +12,7 @@
     <!-- Units -->
     <string name="units_kilograms">Kg</string>
     <string name="units_pounds">Lb</string>
+
+    <!-- Preference Strings -->
+    <string name="pref_sort_order_default" translatable="false">alphabetical</string>
 </resources>

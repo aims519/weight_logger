@@ -1,8 +1,10 @@
 package com.aimtech.android.repsforjesus.Activities;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -36,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         // Set up toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
+
+        // Load default preferences (Once only)
+        PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
 
 
         // Hook up ViewPager with adapter
@@ -75,8 +80,12 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
                 fm = getSupportFragmentManager();
                 NewExerciseDialog newExerciseDialogFragment = NewExerciseDialog.newInstance("New Exercise");
                 newExerciseDialogFragment.show(fm, "fragment_dialog_new_exercise");
-
                 //Dialog callback will update the database if a positive response is received
+                break;
+            case R.id.main_menu_settings:
+                // Launch the SettingsActivity
+                Intent toSettings = new Intent(this,SettingsActivity.class);
+                startActivity(toSettings);
 
             default:
                 // Do nothing
@@ -131,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
             Toast.makeText(this,"'" + name + "' exercise successfully added",Toast.LENGTH_LONG).show();
 
         } else {
-            Toast.makeText(this,"'Chest' only. Other categories coming soon...",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"'Chest' only, please. Other categories coming soon...",Toast.LENGTH_LONG).show();
         }
 
         db.close();

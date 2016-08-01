@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- array for Sort Order Preference -->
+    <string-array name="pref_sort_order_pref_values">
+        <item>alphabetical</item>
+        <item>order_entered</item>
+    </string-array>
+
+    <string-array name="pref_sort_order_entries">
+        <item>Alphabetical</item>
+        <item>Order Entered</item>
+    </string-array>
+
+
+</resources>
