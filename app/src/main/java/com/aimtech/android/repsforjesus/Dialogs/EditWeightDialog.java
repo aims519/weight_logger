@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aimtech.android.repsforjesus.R;
@@ -64,7 +65,12 @@ public class EditWeightDialog extends DialogFragment {
         });
 
 
-        alertDialogBuilder.setTitle(title);
+        //TODO display a title bar instead of plain text
+        //alertDialogBuilder.setTitle(title);
+        TextView titleTextView = (TextView) view.findViewById(R.id.edit_weight_title_text_view);
+        titleTextView.setText(title);
+
+
         alertDialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

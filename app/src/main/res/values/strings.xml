@@ -13,6 +13,15 @@
     <string name="menu_item_reset">Reset</string>
     <string name="menu_item_add_exercise">Add Exercise</string>
 
+    <!-- Text for dialog boxes -->
+    <string name="edit_weight_enter_new">Enter new weight</string>
+    <string name="edit_weight_units">Kg</string>
+    <string name="new_exercise_hint">New exercise name...</string>
+    <string name="new_exercise_header_name">Name</string>
+    <string name="new_exercise_header_category">Category</string>
+    <string name="new_exercise_header_weight">Weight</string>
+
+
 
 
     <!-- Units -->

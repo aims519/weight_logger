@@ -1,5 +1,6 @@
 package com.aimtech.android.repsforjesus.Adapters;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,11 +13,16 @@ import com.aimtech.android.repsforjesus.Fragments.ExerciseListFragment;
 public class CategoryPagerAdapter extends FragmentPagerAdapter {
 
     private final int PAGE_COUNT = 4;
-    private final String[] categoryTitleStrings = new String[]{"Chest", "Back", "Arms", "Legs"};
+    private final String[] mCategoryTitleStrings = new String[]{"CHEST", "BACK", "ARMS", "LEGS"};
+    //private final int[] mImageResIds = new int[]{R.drawable.ic_add_white_24dp,R.drawable.torso_24,R.drawable.torso_24,R.drawable.torso_24};
+
+    //Context required for getDrawable below
+    private Context mContext;
 
     // Requires this emtpy constructor
-    public CategoryPagerAdapter(FragmentManager fm) {
+    public CategoryPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        mContext = context;
     }
 
     @Override
@@ -43,7 +49,8 @@ public class CategoryPagerAdapter extends FragmentPagerAdapter {
     // Function to return the fragment title from the list above
     @Override
     public CharSequence getPageTitle(int position) {
-        return categoryTitleStrings[position];
+
+        return mCategoryTitleStrings[position];
     }
 
     @Override

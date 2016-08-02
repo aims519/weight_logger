@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aimtech.android.repsforjesus.R;
@@ -55,7 +56,10 @@ public class NewExerciseDialog extends DialogFragment {
         spinner.setAdapter(spinnerAdapter);
 
 
-        alertDialogBuilder.setTitle(title);
+        //alertDialogBuilder.setTitle(title);
+        TextView titleTextView = (TextView) view.findViewById(R.id.new_exercise_title_text_view);
+        titleTextView.setText(title);
+
         alertDialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             // used to flag up a duplicate exercise when addding a new one
             Boolean existingResultFound;

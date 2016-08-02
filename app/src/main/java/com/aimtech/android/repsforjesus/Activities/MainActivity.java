@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
     private CategoryPagerAdapter mPagerAdapter;
     private ExerciseDatabaseHelper databaseHelper;
 
+    // Icon IDs for tabs
+    //private final int[] mImageResIds = new int[]{R.drawable.ic_add_white_24dp,R.drawable.torso_24,R.drawable.torso_24,R.drawable.torso_24};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
 
         // Hook up ViewPager with adapter
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
-        mPagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager());
+        mPagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager(),this);
 
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setCurrentItem(0);

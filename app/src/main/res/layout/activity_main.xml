@@ -27,6 +27,8 @@
             android:id="@+id/tab_layout"
             app:tabMode="fixed"
             app:tabMaxWidth="0dp"
+            app:tabIndicatorHeight="3dp"
+            style="@style/MyCustomTabLayout"
             app:tabGravity="fill"
             android:background="@color/colorPrimary">
 
