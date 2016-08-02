@@ -117,9 +117,7 @@ public class NewExerciseDialog extends DialogFragment {
                 }
 
 
-
-
-
+                // Display a message to the user if data is not valid
                 if(newExerciseName.isEmpty()){
 
                     Toast.makeText(getContext(),"Invalid. The exercise must have a name.",Toast.LENGTH_SHORT).show();

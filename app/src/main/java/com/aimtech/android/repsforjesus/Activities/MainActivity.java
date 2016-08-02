@@ -26,6 +26,8 @@ import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseHelper;
 
 public class MainActivity extends AppCompatActivity implements DataBaseResetDialog.DatabaseResetListener,NewExerciseDialog.NewExerciseListener,SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private final String LOG_TAG = MainActivity.class.getSimpleName();
+
     private ViewPager mViewPager;
     private CategoryPagerAdapter mPagerAdapter;
     private ExerciseDatabaseHelper databaseHelper;
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
 
     }
 
-    // OnResumeCallback refresh data
+    // OnResumeCallback to refresh data after preferences have been changed
     @Override
     protected void onResume() {
         super.onResume();
@@ -137,24 +139,31 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         databaseHelper = new ExerciseDatabaseHelper(this);
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
 
-        //determine the category //TODO remove restrictions for category other than chest
+        ContentValues values = new ContentValues();
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME,name);
+
+        // Choose correct category
         if(category.equals(getString(R.string.spinner_chest))){
-
-            ContentValues values = new ContentValues();
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME,name);
             values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "chest");
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, startingWeight);
 
-            // Insert
-            long newRowId = db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME, null, values);
-            Log.d("New Exercise Inserted",name + " exercise was successfully added to the database");
+        } else if (category.equals(getString(R.string.spinner_back))){
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "back");
 
-            // Notify the user that item has been successfully added
-            Toast.makeText(this,"'" + name + "' exercise successfully added",Toast.LENGTH_LONG).show();
+        }else if (category.equals(getString(R.string.spinner_arms))){
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "arms");
 
-        } else {
-            Toast.makeText(this,"'Chest' only, please. Other categories coming soon...",Toast.LENGTH_LONG).show();
+        }else if (category.equals(getString(R.string.spinner_legs))){
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "legs");
         }
+
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, startingWeight);
+
+        // Insert
+        db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME, null, values);
+        Log.d(LOG_TAG,name + " exercise was successfully added to the database");
+
+        // Notify the user that item has been successfully added
+        Toast.makeText(this,"'" + name + "' exercise successfully added",Toast.LENGTH_SHORT).show();
 
         db.close();
         databaseHelper.close();

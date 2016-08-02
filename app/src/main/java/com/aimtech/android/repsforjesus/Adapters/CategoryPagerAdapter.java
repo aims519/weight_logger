@@ -4,10 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.aimtech.android.repsforjesus.Fragments.ArmsFragment;
-import com.aimtech.android.repsforjesus.Fragments.BackFragment;
 import com.aimtech.android.repsforjesus.Fragments.ChestFragment;
-import com.aimtech.android.repsforjesus.Fragments.LegsFragment;
+import com.aimtech.android.repsforjesus.Fragments.ExerciseListFragment;
 
 /**
  * Created by Andy on 30/07/2016.
@@ -28,11 +26,11 @@ public class CategoryPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new ChestFragment();
             case 1:
-                return new BackFragment();
+                return ExerciseListFragment.newInstance("back");
             case 2:
-                return new ArmsFragment();
+                return ExerciseListFragment.newInstance("arms");
             case 3:
-                return new LegsFragment();
+                return ExerciseListFragment.newInstance("legs");
         }
 
         return null;
