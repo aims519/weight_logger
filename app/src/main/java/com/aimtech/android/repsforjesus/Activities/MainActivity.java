@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
 
         // Hook up ViewPager with adapter
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
+        mViewPager.setOffscreenPageLimit(3);
         mPagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager(),this);
 
         mViewPager.setAdapter(mPagerAdapter);
@@ -97,7 +98,11 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
             case R.id.main_menu_add_exercise:
                 // Display the dialog
                 fm = getSupportFragmentManager();
-                NewExerciseDialog newExerciseDialogFragment = NewExerciseDialog.newInstance("New Exercise");
+
+                // Get the current category being viewed
+                String currentCategory = mPagerAdapter.getPageTitle(mViewPager.getCurrentItem()).toString();
+
+                NewExerciseDialog newExerciseDialogFragment = NewExerciseDialog.newInstance("New Exercise",currentCategory);
                 newExerciseDialogFragment.show(fm, "fragment_dialog_new_exercise");
                 //Dialog callback will update the database if a positive response is received
                 break;

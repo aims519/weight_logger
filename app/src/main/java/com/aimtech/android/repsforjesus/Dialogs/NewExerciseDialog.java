@@ -32,10 +32,11 @@ public class NewExerciseDialog extends DialogFragment {
     public NewExerciseDialog() {}
 
     // Initialise Method
-    public static NewExerciseDialog newInstance(String title){
+    public static NewExerciseDialog newInstance(String title,String currentCategoryName){
         NewExerciseDialog frag = new NewExerciseDialog();
         Bundle args = new Bundle();
         args.putString("title", title);
+        args.putString("currentCategoryName",currentCategoryName);
         frag.setArguments(args);
         return frag;
     }
@@ -44,6 +45,8 @@ public class NewExerciseDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final String title = getArguments().getString("title");
+        final String currentCategory = getArguments().getString("currentCategoryName");
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
         // Set the custom layout
@@ -51,9 +54,17 @@ public class NewExerciseDialog extends DialogFragment {
 
         // Set spinner options using an adapter
         final Spinner spinner = (Spinner) view.findViewById(R.id.newExerciseCategorySpinner);
+
         final ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(),R.array.exercise_categories,android.R.layout.simple_spinner_item);
+
+
+
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(spinnerAdapter);
+
+        //Set spinner selection based on the category the user was in when clicking +
+        int positionOfCurrentCategory = spinnerAdapter.getPosition(currentCategory);
+        spinner.setSelection(positionOfCurrentCategory);
 
 
         //alertDialogBuilder.setTitle(title);

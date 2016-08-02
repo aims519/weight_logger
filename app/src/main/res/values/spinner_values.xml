@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="spinner_chest">Chest</string>
-    <string name="spinner_back">Back</string>
-    <string name="spinner_arms">Arms</string>
-    <string name="spinner_legs">Legs</string>
+    <string name="spinner_chest">CHEST</string>
+    <string name="spinner_back">BACK</string>
+    <string name="spinner_arms">ARMS</string>
+    <string name="spinner_legs">LEGS</string>
 
     <string-array name="exercise_categories">
         <item>@string/spinner_chest</item>
