@@ -61,7 +61,7 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
 
 if(showOverdueMessagesPref.equals(true)){
 
-    if (currentExercise.getPreviousWeight() != null && currentExercise.getPreviousWeight() > 0 && currentExercise.getDateLastUpdated() != null) {
+    if ( currentExercise.getDateLastUpdated() != null) {
         // Get today's date
         Calendar calendar = Calendar.getInstance();
         Date now = calendar.getTime();

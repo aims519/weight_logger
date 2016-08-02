@@ -1,12 +1,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.aimtech.android.repsforjesus.Fragments.ArmsFragment">
+    android:layout_height="match_parent">
 
-    <TextView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Arms Fragment Coming Soon..."/>
+        android:id="@+id/listViewExercisesGeneric">
+
+    </ListView>
+
 
 </FrameLayout>
