@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.aimtech.android.repsforjesus.Fragments.ChestFragment;
 import com.aimtech.android.repsforjesus.Fragments.ExerciseListFragment;
 
 /**
@@ -24,7 +23,7 @@ public class CategoryPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new ChestFragment();
+                return ExerciseListFragment.newInstance("chest");
             case 1:
                 return ExerciseListFragment.newInstance("back");
             case 2:
