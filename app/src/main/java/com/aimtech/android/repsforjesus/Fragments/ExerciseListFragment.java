@@ -29,6 +29,9 @@ import java.util.Date;
 
 /**
  * Created by Andy on 02/08/2016.
+ * Displays a list of current exercises in the database, in a ListView
+ * Receives callbacks on positive responses from the EditWeightDialog
+ * Generic fragment used for all exercise categories
  */
 public class ExerciseListFragment extends Fragment implements EditWeightDialog.EditWeightDialogListener {
 

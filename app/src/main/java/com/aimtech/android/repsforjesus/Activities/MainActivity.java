@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
-        // Load default preferences (Once only)
+        // Load default preferences (Once only when the app is first installed)
         PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
 
 
@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
     @Override
     protected void onResume() {
         super.onResume();
-        //TODO refresh only when the sort order preference has been changed
         refreshUI();
     }
 

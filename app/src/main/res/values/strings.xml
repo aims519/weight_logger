@@ -8,6 +8,12 @@
     <string name="category_arms">arms</string>
     <string name="category_legs">legs</string>
 
+    <!-- Menu Item Names -->
+    <string name="menu_item_settings">Settings</string>
+    <string name="menu_item_reset">Reset</string>
+    <string name="menu_item_add_exercise">Add Exercise</string>
+
+
 
     <!-- Units -->
     <string name="units_kilograms">Kg</string>

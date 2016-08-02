@@ -10,6 +10,7 @@ import com.aimtech.android.repsforjesus.R;
 
 /**
  * Created by Andy on 01/08/2016.
+ *  Displays a list of preferences
  */
 public class PreferenceFragment extends android.preference.PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
 

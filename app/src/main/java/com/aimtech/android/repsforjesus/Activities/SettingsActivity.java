@@ -10,6 +10,7 @@ import com.aimtech.android.repsforjesus.R;
 
 /**
  * Created by Andy on 01/08/2016.
+ * Activity to display PreferenceFragment
  */
 public class SettingsActivity extends AppCompatActivity {
 

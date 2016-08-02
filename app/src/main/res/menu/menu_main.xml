@@ -3,16 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/main_menu_add_exercise"
-        android:title="New Exercise"
+        android:title="@string/menu_item_add_exercise"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_add_white_24dp">
+        android:icon="@drawable/ic_add_white_36dp">
     </item>
     <item
         android:id="@+id/main_menu_settings"
-        android:title="Settings"
-        app:showAsAction="never"></item>
+        android:title="@string/menu_item_settings"
+        app:showAsAction="never">
+
+    </item>
     <item
         android:id="@+id/menu_main_reset"
-        android:title="Reset"
-        app:showAsAction="never"></item>
+        android:title="@string/menu_item_reset"
+        app:showAsAction="never">
+
+    </item>
 </menu>
