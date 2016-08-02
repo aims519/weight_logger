@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import com.aimtech.android.repsforjesus.Activities.MainActivity;
+import com.aimtech.android.repsforjesus.R;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseContract;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseHelper;
 
@@ -40,6 +41,7 @@ public class DeleteExerciseDialog extends DialogFragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
         alertDialogBuilder.setTitle(title);
+        alertDialogBuilder.setIcon(R.drawable.ic_warning_black_36dp);
         alertDialogBuilder.setMessage("Are you sure you want to delete the '" + exerciseToDelete + "' exercise?");
 
         alertDialogBuilder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {

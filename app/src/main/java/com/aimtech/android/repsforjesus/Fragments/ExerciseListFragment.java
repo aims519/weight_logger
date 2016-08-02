@@ -91,6 +91,7 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
         // Clears the array list first
         refreshExerciseList();
 
+
         // Set up adapter
         adapter = new ExerciseListAdapter(getContext(), mExerciseList);
 
@@ -98,6 +99,8 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
         ListView exerciseListView = (ListView) rootView.findViewById(R.id.listViewExercisesGeneric);
         exerciseListView.setAdapter(adapter);
 
+        // Set the empty view message to display
+        exerciseListView.setEmptyView(rootView.findViewById(R.id.emtpyListMessage));
 
         // Set on long click listener for list items
         exerciseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -271,6 +274,9 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
 
         // CLose the database
         db.close();
+
+
+
 
     }
 

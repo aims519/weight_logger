@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
+import com.aimtech.android.repsforjesus.R;
+
 /**
  * Created by Andy on 31/07/2016.
  */
@@ -34,6 +36,9 @@ public class DataBaseResetDialog extends DialogFragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
         alertDialogBuilder.setTitle(title);
+
+        alertDialogBuilder.setIcon(R.drawable.ic_warning_black_36dp);
+
         alertDialogBuilder.setMessage("This will permenantly erase all weight data. Are you sure you want to reset?");
 
         alertDialogBuilder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {

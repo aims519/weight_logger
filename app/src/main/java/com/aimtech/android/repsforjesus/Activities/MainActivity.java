@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         // Set up toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+        getSupportActionBar().setTitle("  Weight Log");
 
         // Load default preferences (Once only when the app is first installed)
         PreferenceManager.setDefaultValues(this,R.xml.preferences,false);

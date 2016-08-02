@@ -7,7 +7,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:background="@color/colorDialog"
         tools:text="Exercise Name"
         android:textSize="18sp"

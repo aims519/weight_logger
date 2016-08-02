@@ -11,6 +11,11 @@
     </style>
 
 
+    <!-- style for preferenceCheckBox -->
+    <style name="PrefCheckBoxColour">
+        <item name="colorAccent">#00BFA5</item>
+    </style>
+
     <!-- custom style and text appearance for tab layout -->
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>

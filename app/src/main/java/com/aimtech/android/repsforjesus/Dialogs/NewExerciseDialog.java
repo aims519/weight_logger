@@ -79,7 +79,7 @@ public class NewExerciseDialog extends DialogFragment {
                     newExerciseStartingWeight = "0.0";
                 }
 
-                //TODO Database query to make sure exercise does not exist yet
+                //Database query to make sure new exercise doesn't exist yet
                 ExerciseDatabaseHelper databaseHelper = new ExerciseDatabaseHelper(getContext());
                 SQLiteDatabase db = databaseHelper.getReadableDatabase();
 

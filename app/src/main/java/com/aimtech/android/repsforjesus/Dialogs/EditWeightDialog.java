@@ -65,7 +65,7 @@ public class EditWeightDialog extends DialogFragment {
         });
 
 
-        //TODO display a title bar instead of plain text
+        // Display title bar instead of plain text
         //alertDialogBuilder.setTitle(title);
         TextView titleTextView = (TextView) view.findViewById(R.id.edit_weight_title_text_view);
         titleTextView.setText(title);

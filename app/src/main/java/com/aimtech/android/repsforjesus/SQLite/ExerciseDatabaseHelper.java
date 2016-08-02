@@ -52,7 +52,7 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_ENTRIES);
 
         // Insert the defualt lines into the newly created database
-        insertDefaultLines(sqLiteDatabase);
+        //insertDefaultLines(sqLiteDatabase);
     }
 
     @Override
