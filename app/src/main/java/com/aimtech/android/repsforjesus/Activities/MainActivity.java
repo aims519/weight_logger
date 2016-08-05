@@ -186,13 +186,12 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
     }
 
     // Function to refresh UI. Called by the DeleteExercise dialog after an item has been deleted
-    public Boolean refreshUI(){
+    public void refreshUI(){
         mPagerAdapter.notifyDataSetChanged();
-        return true;
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        // If the sort order prefernce is changed, immediately refresh the UI
+        // If the sort order preference is changed, immediately refresh the UI
     }
 }

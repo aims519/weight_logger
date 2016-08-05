@@ -21,9 +21,9 @@ import com.aimtech.android.repsforjesus.R;
  */
 public class EditWeightDialog extends DialogFragment {
 
-    EditText mNewWeightEditText;
+    private EditText mNewWeightEditText;
 
-    EditWeightDialogListener mListener;
+    private EditWeightDialogListener mListener;
 
     // Required empty constructor
     public EditWeightDialog() {

@@ -72,7 +72,7 @@ public class NewExerciseDialog extends DialogFragment {
         titleTextView.setText(title);
 
         alertDialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-            // used to flag up a duplicate exercise when addding a new one
+            // Boolean used to flag up a duplicate exercise when adding a new one
             Boolean existingResultFound;
 
             @Override
@@ -145,7 +145,7 @@ public class NewExerciseDialog extends DialogFragment {
 
                     // Proceed with addition of exercise
                     // Callback to MainActivity
-                    mListener.onSaveNewExercise(newExerciseName,spinner.getSelectedItem().toString(),newExerciseStartingWeight.toString());
+                    mListener.onSaveNewExercise(newExerciseName,spinner.getSelectedItem().toString(),newExerciseStartingWeight);
                 }
 
 

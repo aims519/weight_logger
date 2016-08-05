@@ -49,7 +49,7 @@
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="-5dp"
-                    android:hint="0.0"
+                    android:hint="@string/hint_weight"
                     android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
                     android:singleLine="true" />
@@ -69,6 +69,7 @@
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="78dp"
+            android:contentDescription="@string/cont_description_delete_icon"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_delete_black_48dp" />
 

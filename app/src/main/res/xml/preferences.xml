@@ -12,7 +12,7 @@
 
     <CheckBoxPreference
         android:key="@string/pref_show_days_since_increase_key"
-        android:title="Show Overdue Messages"
+        android:title="Show Overdue Weight Increases"
         android:theme="@style/PrefCheckBoxColour"
         android:defaultValue="true">
     </CheckBoxPreference>

@@ -15,7 +15,7 @@ import com.aimtech.android.repsforjesus.R;
  */
 public class DataBaseResetDialog extends DialogFragment {
 
-    DatabaseResetListener mListener;
+    private DatabaseResetListener mListener;
 
     //Required empty constructor
     public DataBaseResetDialog() {
@@ -39,7 +39,7 @@ public class DataBaseResetDialog extends DialogFragment {
 
         alertDialogBuilder.setIcon(R.drawable.ic_warning_black_36dp);
 
-        alertDialogBuilder.setMessage("This will permenantly erase all weight data. Are you sure you want to reset?");
+        alertDialogBuilder.setMessage("This will permanently erase all weight data. Are you sure you want to reset?");
 
         alertDialogBuilder.setPositiveButton("Reset", new DialogInterface.OnClickListener() {
             @Override
@@ -56,8 +56,7 @@ public class DataBaseResetDialog extends DialogFragment {
             }
         });
 
-        AlertDialog newDialog = alertDialogBuilder.create();
-        return newDialog;
+        return alertDialogBuilder.create();
     }
 
     public interface DatabaseResetListener {

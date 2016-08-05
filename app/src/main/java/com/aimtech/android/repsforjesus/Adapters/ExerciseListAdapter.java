@@ -48,7 +48,7 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         // Display Data
         Exercise currentExercise = getItem(position);
         exerciseNameTextView.setText(currentExercise.getName());
-        currentWeightTextView.setText(String.valueOf(currentExercise.getCurrentWeight()) + " Kg");
+        currentWeightTextView.setText(getContext().getString(R.string.item_current_weight,String.valueOf(currentExercise.getCurrentWeight())));
 
 
         // If user hasn't increased the weight in a week, display a message
@@ -76,7 +76,7 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
 
                 // Check if last updated date is more than the specified number of days in preferences
                 if (daysPassed >= maxDaysInteger && lastUpdated != null) {
-                    weightUpWarningTextView.setText("No change in " + daysPassed + " days...");
+                    weightUpWarningTextView.setText(getContext().getString(R.string.item_warning_message,daysPassed));
                 } else {
                     weightUpWarningTextView.setText("");
                 }

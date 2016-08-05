@@ -17,9 +17,9 @@ public class CategoryPagerAdapter extends FragmentPagerAdapter {
     //private final int[] mImageResIds = new int[]{R.drawable.ic_add_white_24dp,R.drawable.torso_24,R.drawable.torso_24,R.drawable.torso_24};
 
     //Context required for getDrawable below
-    private Context mContext;
+    private final Context mContext;
 
-    // Requires this emtpy constructor
+    // Requires this empty constructor
     public CategoryPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         mContext = context;

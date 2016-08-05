@@ -42,7 +42,7 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
     private ExerciseListAdapter adapter;
 
     // Instance of SQL database helper
-    ExerciseDatabaseHelper mDbHelper;
+    private ExerciseDatabaseHelper mDbHelper;
 
     // Exercise category, obtained from the Fragment arguments onCreateView
     private String mCategory;
@@ -53,7 +53,7 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
     }
 
     // New Instance method to set the required category for the fragment (chest,back,arms,legs)
-    public static final ExerciseListFragment newInstance(String category){
+    public static ExerciseListFragment newInstance(String category){
         ExerciseListFragment newExerciseListFragment = new ExerciseListFragment();
 
         // store the category in a bundle and set as arguments on the new fragment
@@ -76,7 +76,7 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
         View rootView = inflater.inflate(R.layout.fragment_exercise_generic, container, false);
 
         // Set up the arrayList before query
-        mExerciseList = new ArrayList<Exercise>();
+        mExerciseList = new ArrayList<>();
 
         // Get a readable database
         mDbHelper = new ExerciseDatabaseHelper(getActivity());
@@ -100,7 +100,7 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
         exerciseListView.setAdapter(adapter);
 
         // Set the empty view message to display
-        exerciseListView.setEmptyView(rootView.findViewById(R.id.emtpyListMessage));
+        exerciseListView.setEmptyView(rootView.findViewById(R.id.emptyListMessage));
 
         // Set on long click listener for list items
         exerciseListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -232,7 +232,7 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
 
             int idIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable._ID);
             int nameIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME);
-            int cateroryIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY);
+            int categoryIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY);
             int currentWeightIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT);
             int previousWeightIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_PREVIOUS_WEIGHT);
             int dateLastUpdatedIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED);
@@ -242,7 +242,7 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
 
             // Create an Exercise Object for each row returned in the query and add to arrayList
             while (c != null) {
-                Log.i(LOG_TAG, "Load " + mCategory + " exercises. Cursor output : " + c.getString(idIndex) + ", " + c.getString(nameIndex) + ", " + c.getString(cateroryIndex) + ", " + c.getString(currentWeightIndex) + ", " + c.getString(previousWeightIndex) + ", " + c.getString(dateLastUpdatedIndex));
+                Log.i(LOG_TAG, "Load " + mCategory + " exercises. Cursor output : " + c.getString(idIndex) + ", " + c.getString(nameIndex) + ", " + c.getString(categoryIndex) + ", " + c.getString(currentWeightIndex) + ", " + c.getString(previousWeightIndex) + ", " + c.getString(dateLastUpdatedIndex));
 
                 // Deal with possible null values
                 Double previousWeight;

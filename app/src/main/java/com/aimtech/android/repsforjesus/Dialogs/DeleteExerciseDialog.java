@@ -79,8 +79,7 @@ public class DeleteExerciseDialog extends DialogFragment {
             }
         });
 
-        AlertDialog newDialog = alertDialogBuilder.create();
-        return newDialog;
+        return alertDialogBuilder.create();
     }
 
 }

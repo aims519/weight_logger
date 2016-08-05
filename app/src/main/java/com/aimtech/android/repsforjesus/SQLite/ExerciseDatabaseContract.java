@@ -11,7 +11,6 @@ public class ExerciseDatabaseContract {
     public ExerciseDatabaseContract() {
     }
 
-    ;
 
     // Inner class that defines contents of Exercise table
     public static abstract class ExerciseTable implements BaseColumns {

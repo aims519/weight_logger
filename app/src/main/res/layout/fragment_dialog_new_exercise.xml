@@ -101,7 +101,7 @@
                     android:id="@+id/startingWeightEditText"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:hint="0.0"
+                    android:hint="@string/hint_weight"
                     android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
                     android:singleLine="true" />

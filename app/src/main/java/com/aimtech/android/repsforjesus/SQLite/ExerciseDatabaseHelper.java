@@ -16,7 +16,7 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "ExerciseDb.db";
 
     // master list of default CHEST Exercises and categories
-    String[] masterListChest = new String[]{
+    private String[] mMasterListChest = new String[]{
             "Bench Press",
             "Bench Press (Incline)",
             "Close Grip",
@@ -25,7 +25,7 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
     };
 
     // Master List of default BACK Exercises
-    String[] masterListBack = new String[]{
+    private String[] mMasterListBack = new String[]{
             "Diverging Seated Row",
             "Face",
             "Sit Down Pull Down",
@@ -51,8 +51,6 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
                 " )";
         sqLiteDatabase.execSQL(SQL_CREATE_ENTRIES);
 
-        // Insert the defualt lines into the newly created database
-        //insertDefaultLines(sqLiteDatabase);
     }
 
     @Override
@@ -63,13 +61,13 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    // function to initialise all the default exercies with 0 current weights to start with
+    // function to initialise all the default exercises with 0 current weights to start with
     private void insertDefaultLines(SQLiteDatabase db) {
 
         // Insert default chest exercises
-        for (int i = 0; i < masterListChest.length; i++) {
+        for (String item : mMasterListChest) {
             ContentValues values = new ContentValues();
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME, masterListChest[i]);
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME, item);
             values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "chest");
             values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, "0.0");
 
@@ -79,9 +77,9 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
         }
 
         // Insert default Back exercises
-        for (int i = 0; i < masterListBack.length; i++) {
+        for (String item: mMasterListBack) {
             ContentValues values = new ContentValues();
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME, masterListBack[i]);
+            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME, item);
             values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "back");
             values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, "0.0");
 
