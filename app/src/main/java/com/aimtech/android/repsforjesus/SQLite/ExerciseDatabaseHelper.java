@@ -1,10 +1,8 @@
 package com.aimtech.android.repsforjesus.SQLite;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * Created by Andy on 31/07/2016.
@@ -15,23 +13,6 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "ExerciseDb.db";
 
-    // master list of default CHEST Exercises and categories
-    private String[] mMasterListChest = new String[]{
-            "Bench Press",
-            "Bench Press (Incline)",
-            "Close Grip",
-            "Pectoral Fly",
-            "Converging Chest Press"
-    };
-
-    // Master List of default BACK Exercises
-    private String[] mMasterListBack = new String[]{
-            "Diverging Seated Row",
-            "Face",
-            "Sit Down Pull Down",
-    };
-
-    //TODO add master list for arms and legs
 
     // Default Constructor
     public ExerciseDatabaseHelper(Context context) {
@@ -61,70 +42,6 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    // function to initialise all the default exercises with 0 current weights to start with
-    private void insertDefaultLines(SQLiteDatabase db) {
-
-        // Insert default chest exercises
-        for (String item : mMasterListChest) {
-            ContentValues values = new ContentValues();
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME, item);
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "chest");
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, "0.0");
-
-            //Insert() returns the primary key value of the new row
-            long newRowId = db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME, null, values);
-            Log.i("Database Updated", "New Row ID : " + newRowId);
-        }
-
-        // Insert default Back exercises
-        for (String item: mMasterListBack) {
-            ContentValues values = new ContentValues();
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME, item);
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "back");
-            values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, "0.0");
-
-            //Insert() returns the primary key value of the new row
-            long newRowId = db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME, null, values);
-            Log.i("Database Updated", "New Row ID : " + newRowId);
-        }
-
-        demosSQLDataLoad(db);
-
-        //TODO insert master list for arms and legs
-    }
-
-    //TODO remove this function after testing complete
-    private void demosSQLDataLoad(SQLiteDatabase db){
-        ContentValues values = new ContentValues();
-        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME, "Two-Handed Fly");
-        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "chest");
-        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, "14.0");
-        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_PREVIOUS_WEIGHT, "10.0");
-        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED, "25/07/2016");
-
-        ContentValues values2 = new ContentValues();
-        values2.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME, "Close Grip");
-        values2.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "chest");
-        values2.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, "40.0");
-        values2.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_PREVIOUS_WEIGHT, "0.0");
-        values2.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED, "20/07/2016");
-
-        db.beginTransaction();
-
-        // Insert
-        db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME, null, values);
-        db.setTransactionSuccessful();
-        db.endTransaction();
-
-        db.beginTransaction();
-        //update an existing line
-        String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " = ?";
-        String[] selectionArgs = new String[]{"Close Grip"};
-        db.update(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME,values2,selection,selectionArgs);
-
-        db.setTransactionSuccessful();
-        db.endTransaction();
-    }
 
 
 }
