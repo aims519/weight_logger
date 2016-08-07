@@ -23,11 +23,12 @@ public class DeleteExerciseDialog extends DialogFragment {
     public DeleteExerciseDialog() {
     }
 
+    // When a new instance of the DeleteExerciseDialog is created, the name of the exercise is passed as an argument
     public static DeleteExerciseDialog newInstance(String title, String exerciseName) {
         DeleteExerciseDialog frag = new DeleteExerciseDialog();
         Bundle args = new Bundle();
         args.putString("title", title);
-        args.putString("exerciseToDelete",exerciseName);
+        args.putString("exerciseToDelete", exerciseName);
         frag.setArguments(args);
         return frag;
     }
@@ -68,7 +69,9 @@ public class DeleteExerciseDialog extends DialogFragment {
                 mainActivity.refreshUI();
 
                 // Notify the user that the delete was successful
-                Toast.makeText(getContext(),"'" + exerciseToDelete + "' has been deleted successfully",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "'" + exerciseToDelete + "' has been deleted successfully", Toast.LENGTH_LONG).show();
+
+                //TODO display a snackbar message with an "Undo" option
             }
         });
 

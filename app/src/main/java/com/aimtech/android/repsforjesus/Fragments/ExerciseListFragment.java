@@ -53,12 +53,12 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
     }
 
     // New Instance method to set the required category for the fragment (chest,back,arms,legs)
-    public static ExerciseListFragment newInstance(String category){
+    public static ExerciseListFragment newInstance(String category) {
         ExerciseListFragment newExerciseListFragment = new ExerciseListFragment();
 
         // store the category in a bundle and set as arguments on the new fragment
         Bundle bundle = new Bundle();
-        bundle.putString("bundle_category_string",category);
+        bundle.putString("bundle_category_string", category);
         newExerciseListFragment.setArguments(bundle);
 
         return newExerciseListFragment;
@@ -127,7 +127,6 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
     }
 
 
-
     // Define what happens on save of a new weight. Method from dialog interface
     @Override
     public void onSaveNewWeight(String exerciseName, String newWeight) {
@@ -170,16 +169,18 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
     // Define what happens when the user deletes an exercise. Method from dialog interface
     @Override
     public void onExerciseDelete(String exerciseToDelete) {
-        Log.d("Delete button","User has selected to delete an exercise :" + exerciseToDelete);
+        Log.d("Delete button", "User has selected to delete an exercise :" + exerciseToDelete);
         // SHow the dialog to ask user to confirm
         android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
-        DeleteExerciseDialog dialogFragment = DeleteExerciseDialog.newInstance("Warning!",exerciseToDelete);
+        DeleteExerciseDialog dialogFragment = DeleteExerciseDialog.newInstance("Warning!", exerciseToDelete);
 
         dialogFragment.setTargetFragment(ExerciseListFragment.this, 100);
         dialogFragment.show(fm, "fragment_dialog_delete_exercise_warning");
 
     }
 
+    // Helper function to reload the current list of exercises
+    // Uses a database query
     public void refreshExerciseList() {
         // Get readable database
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -199,9 +200,9 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
 
         //Define a sort order. Read from preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String sortOrderPref = prefs.getString(getString(R.string.pref_sort_order_key),getString(R.string.pref_sort_order_default));
+        String sortOrderPref = prefs.getString(getString(R.string.pref_sort_order_key), getString(R.string.pref_sort_order_default));
         String sortOrder;
-        switch (sortOrderPref){
+        switch (sortOrderPref) {
             case "alphabetical":
                 sortOrder = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " ASC";
                 break;
@@ -230,6 +231,7 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
                     sortOrder
             );
 
+            // Column indices used to easily retrieve data from cursor
             int idIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable._ID);
             int nameIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME);
             int categoryIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY);
@@ -272,14 +274,13 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
             e.printStackTrace();
         }
 
-        // CLose the database
+        // Close the database
         db.close();
-
-
 
 
     }
 
+    // Helper function to retrieve the currentWeight data for a given exercise
     private String getCurrentWeightForExercise(String exerciseName) {
         String currentWeight = "";
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
@@ -328,7 +329,7 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
             e.printStackTrace();
         }
 
-        // CLose the database
+        // Close the database
         db.close();
 
         return currentWeight;

@@ -29,14 +29,15 @@ public class NewExerciseDialog extends DialogFragment {
     private NewExerciseListener mListener;
 
     // Empty Constructor
-    public NewExerciseDialog() {}
+    public NewExerciseDialog() {
+    }
 
     // Initialise Method
-    public static NewExerciseDialog newInstance(String title,String currentCategoryName){
+    public static NewExerciseDialog newInstance(String title, String currentCategoryName) {
         NewExerciseDialog frag = new NewExerciseDialog();
         Bundle args = new Bundle();
         args.putString("title", title);
-        args.putString("currentCategoryName",currentCategoryName);
+        args.putString("currentCategoryName", currentCategoryName);
         frag.setArguments(args);
         return frag;
     }
@@ -50,26 +51,28 @@ public class NewExerciseDialog extends DialogFragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
         // Set the custom layout
-        final View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_dialog_new_exercise,null);
+        final View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_dialog_new_exercise, null);
 
         // Set spinner options using an adapter
         final Spinner spinner = (Spinner) view.findViewById(R.id.newExerciseCategorySpinner);
 
-        final ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(),R.array.exercise_categories,android.R.layout.simple_spinner_item);
+        final ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(), R.array.exercise_categories, android.R.layout.simple_spinner_item);
 
-
-
+        // Set the layout for each item in the dropdown
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+
+        // Set adapter for spinner
         spinner.setAdapter(spinnerAdapter);
 
-        //Set spinner selection based on the category the user was in when clicking +
+        //Set spinner selection based on the category the user was in when clicking the + menu option
         int positionOfCurrentCategory = spinnerAdapter.getPosition(currentCategory);
         spinner.setSelection(positionOfCurrentCategory);
 
 
-        //alertDialogBuilder.setTitle(title);
+        // Display title of Dialog using a layout, instead of plain text
         TextView titleTextView = (TextView) view.findViewById(R.id.new_exercise_title_text_view);
         titleTextView.setText(title);
+
 
         alertDialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             // Boolean used to flag up a duplicate exercise when adding a new one
@@ -78,6 +81,7 @@ public class NewExerciseDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
+                // Get UI elements
                 final EditText newExerciseNameEditText = (EditText) view.findViewById(R.id.newExerciseNameEditText);
                 final EditText startingWeightEditText = (EditText) view.findViewById(R.id.startingWeightEditText);
 
@@ -86,7 +90,7 @@ public class NewExerciseDialog extends DialogFragment {
                 String newExerciseStartingWeight = startingWeightEditText.getText().toString();
 
                 // If nothing entered for a starting weight, default to zero
-                if(newExerciseStartingWeight.isEmpty()){
+                if (newExerciseStartingWeight.isEmpty()) {
                     newExerciseStartingWeight = "0.0";
                 }
 
@@ -103,7 +107,7 @@ public class NewExerciseDialog extends DialogFragment {
                 String sortOrder = ExerciseDatabaseContract.ExerciseTable._ID + " ASC";
 
                 // Define a query, i.e return only rows with the name of the new exercise
-                String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME+ " LIKE ?";
+                String selection = ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_NAME + " LIKE ?";
                 String[] selectionArgs = new String[]{newExerciseName};
 
                 try {
@@ -133,19 +137,19 @@ public class NewExerciseDialog extends DialogFragment {
 
 
                 // Display a message to the user if data is not valid
-                if(newExerciseName.isEmpty()){
+                if (newExerciseName.isEmpty()) {
 
-                    Toast.makeText(getContext(),"Invalid. The exercise must have a name.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Invalid. The exercise must have a name.", Toast.LENGTH_SHORT).show();
 
-                } else if(existingResultFound){
+                } else if (existingResultFound) {
 
                     // A duplicate has been found in the query above, notify the user
-                    Toast.makeText(getContext(),"An exercise called '" + newExerciseName + "' already exists!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "An exercise called '" + newExerciseName + "' already exists!", Toast.LENGTH_LONG).show();
                 } else {
 
                     // Proceed with addition of exercise
                     // Callback to MainActivity
-                    mListener.onSaveNewExercise(newExerciseName,spinner.getSelectedItem().toString(),newExerciseStartingWeight);
+                    mListener.onSaveNewExercise(newExerciseName, spinner.getSelectedItem().toString(), newExerciseStartingWeight);
                 }
 
 
@@ -161,15 +165,9 @@ public class NewExerciseDialog extends DialogFragment {
         });
 
 
-
-
-
-
         // Make sure that the keyboard is shown when the dialog is created
         alertDialogBuilder.setView(view);
         AlertDialog newDialog = alertDialogBuilder.create();
-
-
 
 
         newDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
@@ -178,8 +176,8 @@ public class NewExerciseDialog extends DialogFragment {
         return newDialog;
     }
 
-    public interface NewExerciseListener{
-        void onSaveNewExercise(String name,String category,String startingWeight);
+    public interface NewExerciseListener {
+        void onSaveNewExercise(String name, String category, String startingWeight);
     }
 
     @Override

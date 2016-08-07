@@ -59,10 +59,12 @@ public class DataBaseResetDialog extends DialogFragment {
         return alertDialogBuilder.create();
     }
 
+    // Interface used to send callbacks to MainActivity when a database reset is required
     public interface DatabaseResetListener {
         void onDatabaseReset();
     }
 
+    // onAttach is called before onCreate, when a fragment becomes associated with an activity
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -70,7 +72,7 @@ public class DataBaseResetDialog extends DialogFragment {
         try {
             mListener = (DatabaseResetListener) getActivity();
         } catch (ClassCastException e) {
-            //The activity/fragment doesn't implement the interface. Throw exception
+            // The activity/fragment doesn't implement the interface. Throw exception
             throw new ClassCastException(context.toString() + " must implement DatabaseResetListener");
         }
     }

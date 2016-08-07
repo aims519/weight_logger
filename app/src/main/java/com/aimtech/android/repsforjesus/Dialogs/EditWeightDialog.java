@@ -45,7 +45,7 @@ public class EditWeightDialog extends DialogFragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
         // Set the custom layout
-        final View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_dialog_edit_weight,null);
+        final View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_dialog_edit_weight, null);
 
         // Hook up delete button
         ImageButton deleteButton = (ImageButton) view.findViewById(R.id.deleteExerciseButton);
@@ -66,7 +66,6 @@ public class EditWeightDialog extends DialogFragment {
 
 
         // Display title bar instead of plain text
-        //alertDialogBuilder.setTitle(title);
         TextView titleTextView = (TextView) view.findViewById(R.id.edit_weight_title_text_view);
         titleTextView.setText(title);
 
@@ -77,10 +76,10 @@ public class EditWeightDialog extends DialogFragment {
 
                 // CHeck to make sure a weight has been entered
                 String newWeightEntered = newWeightEditText.getText().toString();
-                if(newWeightEntered.isEmpty()){
-                    Toast.makeText(getContext(),"Invalid. Please enter a weight.",Toast.LENGTH_SHORT).show();
-                } else if (Double.parseDouble(newWeightEntered) < 0){
-                    Toast.makeText(getContext(),"Invalid. Mass must be positive due to physics.",Toast.LENGTH_SHORT).show();
+                if (newWeightEntered.isEmpty()) {
+                    Toast.makeText(getContext(), "Invalid. Please enter a weight.", Toast.LENGTH_SHORT).show();
+                } else if (Double.parseDouble(newWeightEntered) < 0) {
+                    Toast.makeText(getContext(), "Invalid. Mass must be positive due to physics.", Toast.LENGTH_SHORT).show();
                 } else {
                     // Send the positive button event back to the host fragment
                     Dialog f = (Dialog) dialogInterface;
@@ -92,7 +91,6 @@ public class EditWeightDialog extends DialogFragment {
 
             }
         });
-
 
 
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -113,21 +111,21 @@ public class EditWeightDialog extends DialogFragment {
     }
 
 
-
-
     // Define the listener interface. This must be implemented in any activity/fragment that wants to receive data from the
-    // AlertDialog
+    // AlertDialog. Sends a callback if a new weight is being saved, or an exercise is being deleted.
     public interface EditWeightDialogListener {
         void onSaveNewWeight(String exerciseName, String newWeight);
+
         void onExerciseDelete(String exerciseToDelete);
     }
 
     // Override the Fragment.onAttach method to instantiate the EditWeightDialogListener
+    // onAttach is called immediately when a fragment becomes associated with an activity.
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        // verify that the host activity implements the callback interface
+        // verify that the host activity implements the interface so that callbacks can be recieved.
         try {
             mListener = (EditWeightDialogListener) getTargetFragment();
         } catch (ClassCastException e) {

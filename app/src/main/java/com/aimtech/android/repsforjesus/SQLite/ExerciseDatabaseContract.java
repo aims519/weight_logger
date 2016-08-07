@@ -4,6 +4,7 @@ import android.provider.BaseColumns;
 
 /**
  * Created by Andy on 31/07/2016.
+ * Contract class for the ExerciseDatabase
  */
 public class ExerciseDatabaseContract {
 

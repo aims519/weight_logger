@@ -7,6 +7,7 @@ import java.util.Locale;
 
 /**
  * Created by Andy on 01/08/2016.
+ * Various helper functions that can be used throughout the project
  */
 public class Utility {
 

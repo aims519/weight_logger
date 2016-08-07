@@ -6,6 +6,7 @@ import java.util.Date;
 
 /**
  * Created by Andy on 30/07/2016.
+ * Class used to store data about each exercise
  */
 public class Exercise {
 

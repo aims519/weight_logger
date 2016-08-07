@@ -32,13 +32,11 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
     private CategoryPagerAdapter mPagerAdapter;
     private ExerciseDatabaseHelper databaseHelper;
 
-    // Icon IDs for tabs
-    //private final int[] mImageResIds = new int[]{R.drawable.ic_add_white_24dp,R.drawable.torso_24,R.drawable.torso_24,R.drawable.torso_24};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Load layout for MainActivity
         setContentView(R.layout.activity_main);
 
         // Register OnSharedPreferenceChance Listener
@@ -50,16 +48,18 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         getSupportActionBar().setTitle("   Weight Log");
 
+
         // Load default preferences (Once only when the app is first installed)
-        PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
 
         // Hook up ViewPager with adapter
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
         mViewPager.setOffscreenPageLimit(3);
-        mPagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager(),this);
+        mPagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager(), this);
 
         mViewPager.setAdapter(mPagerAdapter);
+        // Always create Mainactivity with the first fragment selected in the ViewPager
         mViewPager.setCurrentItem(0);
 
         // Set up tab layout and link to the viewpager
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         refreshUI();
     }
 
-    //Inflate the main menu
+    //Inflate the main menu from the menu_main.xml file
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -91,12 +91,13 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
 
         switch (item.getItemId()) {
             case R.id.menu_main_reset:
+                // Open the DatabaseReset dialog fragment
                 fm = getSupportFragmentManager();
                 DataBaseResetDialog dialogFragment = DataBaseResetDialog.newInstance("Warning!");
                 dialogFragment.show(fm, "database_reset_dialog");
                 break;
             case R.id.main_menu_add_exercise:
-                // Display the dialog
+                // Display the NewExercise dialog
                 fm = getSupportFragmentManager();
 
                 // Get the current category being viewed
@@ -104,7 +105,8 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
 
                 NewExerciseDialog newExerciseDialogFragment = NewExerciseDialog.newInstance("New Exercise",currentCategory);
                 newExerciseDialogFragment.show(fm, "fragment_dialog_new_exercise");
-                //Dialog callback will update the database if a positive response is received
+
+                //Callback from NewExerciseDialog will update the database if a positive response is received
                 break;
             case R.id.main_menu_settings:
                 // Launch the SettingsActivity
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         return true;
     }
 
-    // Callback for database reset (from Dialog)
+    // Callback for database reset (sent from DatabaseResetDialog, picked up by DatabaseResetListener)
     @Override
     public void onDatabaseReset() {
         //Reset the database if dialog response was positive
@@ -139,9 +141,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         mPagerAdapter.notifyDataSetChanged();
     }
 
-    // Callback for new exercise (from Dialog)
-
-
+    // Callback for new exercise (Sent from NewExercise Dialog, picked up by NewExercise listener)
     @Override
     public void onSaveNewExercise(String name, String category, String startingWeight) {
         // Update the database
@@ -165,21 +165,24 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
             values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CATEGORY, "legs");
         }
 
+
         values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, startingWeight);
 
-        // Insert
+        // Insert the new exercise into the database
         db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME, null, values);
         Log.d(LOG_TAG,name + " exercise was successfully added to the database");
 
-        // Notify the user that item has been successfully added
+        // Notify the user that item has been successfully added using a Toast message
         Toast.makeText(this,"'" + name + "' exercise successfully added",Toast.LENGTH_SHORT).show();
 
+
+        // Cleanup by closing the database and instance of ExerciseDatabaseHelper
         db.close();
         databaseHelper.close();
 
         //Refresh fragment UI
         // notifyDataSetChanged calls getItemPosition in the CategoryPagerAdapterClass
-        // This always returns POSITION_NONE, which refreshes the fragment
+        // This always returns POSITION_NONE, which leads to a new instance of the fragment being created
         mPagerAdapter.notifyDataSetChanged();
 
 

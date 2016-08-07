@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Created by Andy on 31/07/2016.
+ * Helper class to assist with creating/updating the Exercise database
  */
 public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
 
@@ -40,8 +41,6 @@ public class ExerciseDatabaseHelper extends SQLiteOpenHelper {
         final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + ExerciseDatabaseContract.ExerciseTable.TABLE_NAME;
         sqLiteDatabase.execSQL(SQL_DELETE_ENTRIES);
     }
-
-
 
 
 }
