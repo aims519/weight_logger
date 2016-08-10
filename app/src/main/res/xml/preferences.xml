@@ -9,6 +9,15 @@
         android:summary="%s">
     </ListPreference>
 
+    <ListPreference
+        android:key="@string/pref_units_key"
+        android:title="Units"
+        android:entries="@array/pref_units_entries"
+        android:entryValues="@array/pref_units_values"
+        android:defaultValue="@string/pref_unit_default"
+        android:summary="%s">
+    </ListPreference>
+
 
     <CheckBoxPreference
         android:key="@string/pref_show_days_since_increase_key"

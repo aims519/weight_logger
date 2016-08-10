@@ -11,18 +11,19 @@ import java.util.Locale;
  */
 public class Utility {
 
-    public static String formatDateToString(Date date){
+    public static String formatDateToString(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
         return dateFormat.format(date);
     }
 
-    public static Date parseStringToDate(String dateString){
+    public static Date parseStringToDate(String dateString) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy", Locale.ENGLISH);
-        try{
+        try {
             return dateFormat.parse(dateString);
-        } catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return null;
     }
+
 }

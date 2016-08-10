@@ -14,12 +14,14 @@
     <string name="menu_item_add_exercise">Add Exercise</string>
 
     <!-- Text for list Items -->
-    <string name="item_current_weight">%1$s Kg</string>
+    <string name="item_current_weight_kg">%1$s kg</string>
+    <string name="item_current_weight_lb">%1$s lb</string>
     <string name="item_warning_message">No change in %1$d days...</string>
 
     <!-- Text for dialog boxes -->
     <string name="edit_weight_enter_new">Enter new weight</string>
-    <string name="edit_weight_units">Kg</string>
+    <string name="edit_weight_units_kg">kg</string>
+    <string name="edit_weight_units_lb">lb</string>
     <string name="new_exercise_hint">Enter Name...</string>
     <string name="new_exercise_header_name">Name</string>
     <string name="new_exercise_header_category">Category</string>
@@ -27,12 +29,15 @@
 
 
     <!-- Units -->
-    <string name="units_kilograms">Kg</string>
-    <string name="units_pounds">Lb</string>
+    <string name="units_kilograms">kg</string>
+    <string name="units_pounds">lb</string>
 
     <!-- Preference Strings -->
     <string name="pref_sort_order_default" translatable="false">alphabetical</string>
     <string name="pref_sort_order_key" translatable="false">pref_sort_order</string>
+
+    <string name="pref_unit_default" translatable="false">kg</string>
+    <string name="pref_units_key" translatable="false">pref_units</string>
 
     <string name="pref_show_days_since_increase_key" translatable="false">pref_display_additional_info</string>
     <string name="pref_show_days_since_increase_default" translatable="false">true</string>

@@ -239,11 +239,9 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
             int previousWeightIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_PREVIOUS_WEIGHT);
             int dateLastUpdatedIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED);
 
-            // print the results of the query
-            c.moveToFirst();
 
             // Create an Exercise Object for each row returned in the query and add to arrayList
-            while (c != null) {
+            while (c.moveToNext()) {
                 Log.i(LOG_TAG, "Load " + mCategory + " exercises. Cursor output : " + c.getString(idIndex) + ", " + c.getString(nameIndex) + ", " + c.getString(categoryIndex) + ", " + c.getString(currentWeightIndex) + ", " + c.getString(previousWeightIndex) + ", " + c.getString(dateLastUpdatedIndex));
 
                 // Deal with possible null values
@@ -263,7 +261,7 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
                 }
 
                 mExerciseList.add(new Exercise(c.getString(nameIndex), Double.parseDouble(c.getString(currentWeightIndex)), previousWeight, dateLastUpdated));
-                c.moveToNext();
+
             }
 
             // Close the cursor
@@ -311,14 +309,11 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
 
             int currentWeightIndex = c.getColumnIndex(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT);
 
-            // print the results of the query
-            c.moveToFirst();
 
             // Create an Exercise Object for each row returned in the query and add to arrayList
-            while (c != null) {
+            while (c.moveToNext()) {
                 Log.i("Current Weight Returned", c.getString(currentWeightIndex));
                 currentWeight = c.getString(currentWeightIndex);
-                c.moveToNext();
             }
 
             // Close the cursor

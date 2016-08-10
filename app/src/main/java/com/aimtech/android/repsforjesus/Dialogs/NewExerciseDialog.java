@@ -3,9 +3,11 @@ package com.aimtech.android.repsforjesus.Dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +29,8 @@ import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseHelper;
 public class NewExerciseDialog extends DialogFragment {
 
     private NewExerciseListener mListener;
+
+    private SharedPreferences mPrefs;
 
     // Empty Constructor
     public NewExerciseDialog() {
@@ -67,6 +71,17 @@ public class NewExerciseDialog extends DialogFragment {
         //Set spinner selection based on the category the user was in when clicking the + menu option
         int positionOfCurrentCategory = spinnerAdapter.getPosition(currentCategory);
         spinner.setSelection(positionOfCurrentCategory);
+
+        // Set unit text by reading value from shared preferences
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String unitPref = mPrefs.getString(getContext().getString(R.string.pref_units_key),getContext().getString(R.string.pref_unit_default));
+        TextView unitTextView = (TextView) view.findViewById(R.id.new_exercise_weight_unit_textview);
+
+        if(unitPref.equals(getContext().getString(R.string.units_kilograms))){
+            unitTextView.setText(getString(R.string.units_kilograms));
+        } else if (unitPref.equals(getContext().getString(R.string.units_pounds))){
+            unitTextView.setText(getString(R.string.units_pounds));
+        }
 
 
         // Display title of Dialog using a layout, instead of plain text

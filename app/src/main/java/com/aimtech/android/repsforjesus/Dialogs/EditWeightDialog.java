@@ -3,7 +3,9 @@ package com.aimtech.android.repsforjesus.Dialogs;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -24,6 +26,8 @@ public class EditWeightDialog extends DialogFragment {
     private EditText mNewWeightEditText;
 
     private EditWeightDialogListener mListener;
+
+    private SharedPreferences mPrefs;
 
     // Required empty constructor
     public EditWeightDialog() {
@@ -68,6 +72,17 @@ public class EditWeightDialog extends DialogFragment {
         // Display title bar instead of plain text
         TextView titleTextView = (TextView) view.findViewById(R.id.edit_weight_title_text_view);
         titleTextView.setText(title);
+
+        // Set unit text by reading value from shared preferences
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String unitPref = mPrefs.getString(getContext().getString(R.string.pref_units_key),getContext().getString(R.string.pref_unit_default));
+        TextView unitTextView = (TextView) view.findViewById(R.id.edit_weight_unit_textview);
+
+        if(unitPref.equals(getContext().getString(R.string.units_kilograms))){
+            unitTextView.setText(getString(R.string.units_kilograms));
+        } else if (unitPref.equals(getContext().getString(R.string.units_pounds))){
+            unitTextView.setText(getString(R.string.units_pounds));
+        }
 
 
         alertDialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {

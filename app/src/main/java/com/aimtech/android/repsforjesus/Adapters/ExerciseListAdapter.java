@@ -25,6 +25,9 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
 
     private final String LOG_TAG = ExerciseListAdapter.class.getSimpleName();
 
+    private SharedPreferences mPrefs;
+    private Context mContext;
+
     public ExerciseListAdapter(Context context, List<Exercise> objects) {
         super(context, 0, objects);
     }
@@ -32,6 +35,9 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        mContext = getContext();
 
         // Check if existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
@@ -48,14 +54,22 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> {
         // Display Data
         Exercise currentExercise = getItem(position);
         exerciseNameTextView.setText(currentExercise.getName());
-        currentWeightTextView.setText(getContext().getString(R.string.item_current_weight,String.valueOf(currentExercise.getCurrentWeight())));
+
+        // Checks preferences or which units to use
+        String unitPref = mPrefs.getString(mContext.getString(R.string.pref_units_key),mContext.getString(R.string.pref_unit_default));
+
+        if(unitPref.equals(mContext.getString(R.string.units_kilograms))){
+            currentWeightTextView.setText(getContext().getString(R.string.item_current_weight_kg,String.valueOf(currentExercise.getCurrentWeight())));
+        } else if (unitPref.equals(mContext.getString(R.string.units_pounds))){
+            currentWeightTextView.setText(getContext().getString(R.string.item_current_weight_lb,String.valueOf(currentExercise.getCurrentWeight())));
+        }
+
 
 
         // If user hasn't increased the weight in a week, display a message
         // Only do this if the shared preference for showing messages is true
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        Boolean showOverdueMessagesPref = prefs.getBoolean(getContext().getString(R.string.pref_show_days_since_increase_key), Boolean.parseBoolean(getContext().getString(R.string.pref_show_days_since_increase_default)));
-        String maxDaysBeforeMovingUpString = prefs.getString(getContext().getString(R.string.pref_days_before_warning_key), getContext().getString(R.string.pref_days_before_warning_default));
+        Boolean showOverdueMessagesPref = mPrefs.getBoolean(getContext().getString(R.string.pref_show_days_since_increase_key), Boolean.parseBoolean(getContext().getString(R.string.pref_show_days_since_increase_default)));
+        String maxDaysBeforeMovingUpString = mPrefs.getString(getContext().getString(R.string.pref_days_before_warning_key), getContext().getString(R.string.pref_days_before_warning_default));
         int maxDaysInteger = Integer.parseInt(maxDaysBeforeMovingUpString);
         Log.d(LOG_TAG, "ShowOverdue : " + showOverdueMessagesPref + ". Days : " + String.valueOf(maxDaysInteger));
 
