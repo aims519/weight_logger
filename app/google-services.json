@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "22263984577",
+    "firebase_url": "https://weight-log-707e3.firebaseio.com",
+    "project_id": "weight-log-707e3",
+    "storage_bucket": "weight-log-707e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:22263984577:android:c05e6cf8b5e3902d",
+        "android_client_info": {
+          "package_name": "com.aimtech.android.repsforjesus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "22263984577-qjms36crd409hpe7b1l3vk0f390508ts.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aimtech.android.repsforjesus",
+            "certificate_hash": "D835F05E53901009A05658E96EFF1CEDD1C9A461"
+          }
+        },
+        {
+          "client_id": "22263984577-b7okmg5s8h7laplel6qpu00en6qujm3q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBltMesNzJtshAm4I-d9Be19zycO9Z_mXs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "22263984577-b7okmg5s8h7laplel6qpu00en6qujm3q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
