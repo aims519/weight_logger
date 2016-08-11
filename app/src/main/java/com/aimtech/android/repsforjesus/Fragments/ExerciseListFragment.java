@@ -332,5 +332,16 @@ public class ExerciseListFragment extends Fragment implements EditWeightDialog.E
 
     }
 
+    // Lifecycle callbacks
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("FragmentLifecycle",mCategory + " Fragment Paused");
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("FragmentLifecycle",mCategory + " Fragment Resumed");
+    }
 }

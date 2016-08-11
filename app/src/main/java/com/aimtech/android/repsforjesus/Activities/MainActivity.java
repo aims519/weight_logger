@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
 
         // Hook up ViewPager with adapter
         mViewPager = (ViewPager) findViewById(R.id.main_view_pager);
-        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(1);
         mPagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager(), this);
 
         mViewPager.setAdapter(mPagerAdapter);
