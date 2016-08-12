@@ -23,6 +23,10 @@ import com.aimtech.android.repsforjesus.Dialogs.NewExerciseDialog;
 import com.aimtech.android.repsforjesus.R;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseContract;
 import com.aimtech.android.repsforjesus.SQLite.ExerciseDatabaseHelper;
+import com.aimtech.android.repsforjesus.Utility;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements DataBaseResetDialog.DatabaseResetListener,NewExerciseDialog.NewExerciseListener,SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -166,7 +170,15 @@ public class MainActivity extends AppCompatActivity implements DataBaseResetDial
         }
 
 
+        //Starting Weight
         values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_CURRENT_WEIGHT, startingWeight);
+
+        // Get Today's date
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+        String formattedDate = Utility.formatDateToString(now);
+
+        values.put(ExerciseDatabaseContract.ExerciseTable.COLUMN_NAME_DATE_LAST_UPDATED,formattedDate);
 
         // Insert the new exercise into the database
         db.insert(ExerciseDatabaseContract.ExerciseTable.TABLE_NAME, null, values);
